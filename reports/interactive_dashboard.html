@@ -76,37 +76,48 @@
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--border-subtle);
-            padding: 14px 36px;
+            padding: 10px 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 12px;
             position: sticky;
             top: 0;
             z-index: 100;
+            box-sizing: border-box;
+            width: 100%;
         }
 
-        .brand-container {
+        .header-top-row {
             display: flex;
             align-items: center;
             gap: 14px;
         }
 
+        .brand-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
         .brand-badge {
-            width: 36px;
-            height: 36px;
+            width: 32px;
+            height: 32px;
             background: var(--brand-gradient);
-            border-radius: 10px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 16px rgba(14, 165, 233, 0.4);
+            box-shadow: 0 0 14px rgba(14, 165, 233, 0.4);
+            flex-shrink: 0;
         }
 
         .brand-name {
-            font-size: 19px;
+            font-size: 18px;
             font-weight: 800;
             letter-spacing: -0.4px;
             color: #FFFFFF;
+            white-space: nowrap;
         }
 
         .brand-name span {
@@ -120,11 +131,11 @@
             background: rgba(16, 185, 129, 0.1);
             border: 1px solid rgba(16, 185, 129, 0.25);
             color: #34D399;
-            font-size: 11.5px;
+            font-size: 11px;
             font-weight: 600;
-            padding: 3px 10px;
+            padding: 3px 8px;
             border-radius: 20px;
-            margin-left: 10px;
+            white-space: nowrap;
         }
 
         .pulse-dot {
@@ -142,29 +153,35 @@
             100% { transform: scale(0.95); opacity: 0.8; }
         }
 
-        /* Pro Navigation Tabs */
+        /* Pro Navigation Tabs - Sleek Pro Sizing */
         .nav-dock {
-            display: flex;
+            display: inline-flex;
+            align-items: center;
             gap: 4px;
-            background: rgba(6, 9, 15, 0.8);
+            background: rgba(6, 9, 15, 0.85);
             border: 1px solid var(--border-medium);
             padding: 4px;
-            border-radius: 12px;
+            border-radius: 10px;
         }
 
         .dock-btn {
             background: transparent;
-            border: none;
+            border: 1px solid transparent;
             color: var(--text-muted);
-            padding: 8px 18px;
-            border-radius: 8px;
-            font-size: 13px;
+            padding: 6px 12px;
+            border-radius: 7px;
+            font-size: 12px;
             font-weight: 600;
             cursor: pointer;
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            gap: 8px;
+            justify-content: center;
+            gap: 6px;
+            height: 32px;
+            line-height: 1;
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            white-space: nowrap;
+            box-sizing: border-box;
         }
 
         .dock-btn:hover {
@@ -176,28 +193,33 @@
             background: var(--bg-surface-2);
             color: #FFFFFF;
             border: 1px solid var(--border-active);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3), 0 0 12px rgba(14, 165, 233, 0.15);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3), 0 0 12px rgba(14, 165, 233, 0.18);
         }
 
         .header-actions {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
+            flex-shrink: 0;
         }
 
         .action-btn {
             background: var(--bg-surface-2);
             border: 1px solid var(--border-subtle);
             color: var(--text-main);
-            padding: 7px 14px;
-            border-radius: 8px;
-            font-size: 12.5px;
+            padding: 6px 12px;
+            border-radius: 7px;
+            font-size: 12px;
             font-weight: 600;
             cursor: pointer;
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
+            height: 32px;
+            line-height: 1;
             transition: all 0.2s;
+            white-space: nowrap;
+            box-sizing: border-box;
         }
 
         .action-btn:hover {
@@ -429,12 +451,16 @@
         /* Pro Data Table */
         .pro-table-wrapper {
             overflow-x: auto;
-            border-radius: 10px;
+            -webkit-overflow-scrolling: touch;
+            border-radius: 12px;
             border: 1px solid var(--border-subtle);
+            width: 100%;
+            background: var(--bg-surface-1);
         }
 
         .pro-table {
             width: 100%;
+            min-width: 1120px; /* Enforces clean horizontal layout without cutting or wrapping words */
             border-collapse: collapse;
             font-size: 13px;
             text-align: left;
@@ -442,19 +468,34 @@
 
         .pro-table th {
             background: var(--bg-surface-2);
-            padding: 12px 16px;
+            padding: 13px 18px;
             color: var(--text-muted);
-            font-weight: 600;
+            font-weight: 700;
             font-size: 11.5px;
             text-transform: uppercase;
             letter-spacing: 0.6px;
             border-bottom: 1px solid var(--border-medium);
+            white-space: nowrap;
         }
 
         .pro-table td {
-            padding: 13px 16px;
+            padding: 14px 18px;
             border-bottom: 1px solid var(--border-subtle);
             color: var(--text-main);
+            white-space: nowrap;
+            vertical-align: middle;
+        }
+
+        .pro-table td.cell-driver {
+            white-space: normal;
+            min-width: 240px;
+            color: var(--text-muted);
+            font-size: 12.5px;
+            line-height: 1.4;
+        }
+
+        .pro-table tr:last-child td {
+            border-bottom: none;
         }
 
         .pro-table tr:hover td {
@@ -464,20 +505,26 @@
         .mono {
             font-family: 'JetBrains Mono', monospace;
             font-weight: 600;
+            white-space: nowrap;
         }
 
         .badge-risk {
-            padding: 3px 9px;
+            padding: 4px 10px;
             border-radius: 6px;
             font-size: 11px;
             font-weight: 700;
             font-family: 'JetBrains Mono', monospace;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            letter-spacing: 0.3px;
         }
 
-        .badge-risk.critical { background: rgba(244, 63, 94, 0.15); color: #FB7185; border: 1px solid rgba(244, 63, 94, 0.3); }
-        .badge-risk.high { background: rgba(245, 158, 11, 0.15); color: #FBBF24; border: 1px solid rgba(245, 158, 11, 0.3); }
-        .badge-risk.med { background: rgba(56, 189, 248, 0.15); color: #38BDF8; border: 1px solid rgba(56, 189, 248, 0.3); }
-        .badge-risk.low { background: rgba(16, 185, 129, 0.15); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.3); }
+        .badge-risk.critical { background: rgba(244, 63, 94, 0.15); color: #FB7185; border: 1px solid rgba(244, 63, 94, 0.35); }
+        .badge-risk.high { background: rgba(245, 158, 11, 0.15); color: #FBBF24; border: 1px solid rgba(245, 158, 11, 0.35); }
+        .badge-risk.med { background: rgba(56, 189, 248, 0.15); color: #38BDF8; border: 1px solid rgba(56, 189, 248, 0.35); }
+        .badge-risk.low { background: rgba(16, 185, 129, 0.15); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.35); }
 
         /* Simulator Card */
         .simulator-pane {
@@ -549,11 +596,15 @@
             background: var(--brand-gradient);
             border: none;
             color: #FFFFFF;
-            padding: 6px 12px;
-            border-radius: 6px;
+            padding: 7px 16px;
+            border-radius: 8px;
             font-size: 11.5px;
             font-weight: 700;
             cursor: pointer;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             transition: opacity 0.2s, transform 0.1s;
         }
 
@@ -584,17 +635,144 @@
             to { transform: translateY(0); opacity: 1; }
         }
 
-        @media (max-width: 1024px) {
+        /* --- Tablet & Mobile Responsive System --- */
+        /* Completely suppress ugly browser scrollbars on nav docks */
+        .nav-dock::-webkit-scrollbar {
+            display: none !important;
+            width: 0 !important;
+            height: 0 !important;
+        }
+        .nav-dock {
+            -ms-overflow-style: none !important;
+            scrollbar-width: none !important;
+        }
+
+        @media (max-width: 1280px) {
+            header {
+                padding: 10px 16px;
+                flex-direction: column;
+                gap: 10px;
+                align-items: stretch;
+            }
+
+            .header-top-row {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+            }
+
+            .brand-container {
+                gap: 8px;
+            }
+
+            /* Responsive 4-column or 2x2 Segmented Tab Grid (NO SCROLLBAR & NO CLIPPING) */
+            .nav-dock {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 4px;
+                width: 100%;
+                padding: 4px;
+                overflow: visible;
+                box-sizing: border-box;
+            }
+
+            .dock-btn {
+                white-space: nowrap;
+                justify-content: center;
+                text-align: center;
+                padding: 7px 6px;
+                font-size: 11.5px;
+                width: 100%;
+                height: 32px;
+            }
+
+            .dashboard-shell {
+                padding: 16px 14px;
+            }
+
+            .kpi-row {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 14px;
+            }
+
             .grid-2col, .grid-3col, .sim-kpi-grid {
                 grid-template-columns: 1fr;
+                gap: 16px;
             }
-            .dashboard-shell {
-                padding: 16px;
+        }
+
+        @media (max-width: 860px) {
+            .nav-dock {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 6px;
             }
-            header {
-                padding: 12px 16px;
-                flex-direction: column;
+            .dock-btn {
+                font-size: 12px;
+                height: 34px;
+            }
+        }
+
+        @media (max-width: 540px) {
+            .status-pill {
+                display: none;
+            }
+
+            .nav-dock {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 4px;
+                padding: 4px;
+            }
+
+            .dock-btn {
+                font-size: 11px;
+                padding: 6px 4px;
+                gap: 4px;
+            }
+
+            .dock-btn svg {
+                width: 12px;
+                height: 12px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .kpi-row {
+                grid-template-columns: 1fr;
                 gap: 12px;
+            }
+
+            .subheader-bar {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+            }
+
+            .filter-controls {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .filter-select {
+                width: 100%;
+            }
+
+            .sim-slider-wrap {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+            }
+
+            .slider-display {
+                align-self: flex-start;
+            }
+
+            .toast {
+                left: 16px;
+                right: 16px;
+                bottom: 16px;
+                font-size: 13px;
+                padding: 12px 16px;
             }
         }
     </style>
@@ -606,48 +784,50 @@
 
     <!-- Header Navigation -->
     <header>
-        <div class="brand-container">
-            <div class="brand-badge">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/><circle cx="12" cy="12" r="4"/></svg>
+        <div class="header-top-row">
+            <div class="brand-container">
+                <div class="brand-badge">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/><circle cx="12" cy="12" r="4"/></svg>
+                </div>
+                <div>
+                    <div class="brand-name">Churn<span>Lens</span> <span style="font-size: 11px; font-weight: 600; color: #94A3B8; margin-left: 4px; padding: 2px 6px; background: rgba(255,255,255,0.06); border-radius: 4px;">PRO</span></div>
+                </div>
+                <div class="status-pill">
+                    <span class="pulse-dot"></span>
+                    <span>ML Pipeline Live</span>
+                </div>
             </div>
-            <div>
-                <div class="brand-name">Churn<span>Lens</span> <span style="font-size: 12px; font-weight: 500; color: #94A3B8; margin-left: 6px;">PRO</span></div>
-            </div>
-            <div class="status-pill">
-                <span class="pulse-dot"></span>
-                <span>ML Pipeline Live (AUC 1.00)</span>
+
+            <div class="header-actions">
+                <a href="/" class="action-btn" style="text-decoration: none;">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    <span>Landing</span>
+                </a>
+                <button class="action-btn" onclick="window.print()">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
+                    <span>Export PDF</span>
+                </button>
             </div>
         </div>
 
         <nav class="nav-dock">
             <button class="dock-btn active" onclick="navigateTab('overview', this)">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
                 Executive Overview
             </button>
             <button class="dock-btn" onclick="navigateTab('trends', this)">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
-                Trends & Cohorts
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+                Trends &amp; Cohorts
             </button>
             <button class="dock-btn" onclick="navigateTab('rootcause', this)">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
-                Root Causes & Signals
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+                Root Causes &amp; Signals
             </button>
             <button class="dock-btn" onclick="navigateTab('risk', this)">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-                Risk Queue & Simulator
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                Risk Queue &amp; Simulator
             </button>
         </nav>
-
-        <div class="header-actions">
-            <a href="/" class="action-btn" style="text-decoration: none;">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-                Landing
-            </a>
-            <button class="action-btn" onclick="window.print()">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
-                Export PDF
-            </button>
-        </div>
     </header>
 
     <div class="dashboard-shell">
@@ -666,7 +846,7 @@
                     <option value="SMB">SMB Only</option>
                     <option value="Startup/Individual">Startup / Individual</option>
                 </select>
-                <select class="filter-select" id="timeFilter">
+                <select class="filter-select" id="timeFilter" onchange="updateFilters()">
                     <option value="24M">24-Month Analytical Scope</option>
                     <option value="12M">Last 12 Months</option>
                     <option value="90D">Last 90 Days</option>
@@ -947,6 +1127,91 @@
             document.getElementById('currentViewSubtitle').innerText = titles[tabId].sub;
         }
 
+        // Segment and Time filter datasets
+        const segmentDataMap = {
+            'All': {
+                activeCust: 7861, totalCust: 10000, churnRate: '21.39%', lostMRR: 228846, arrLost: '$2.74M / yr', riskAcc: 660, riskMRR: 73260, riskARR: 879120,
+                segRev: [73771, 64974, 47476, 17812],
+                planRates: [23.5, 20.4, 16.2, 14.1],
+                tenureRates: [31.8, 22.4, 17.1, 12.8, 9.6]
+            },
+            'Enterprise': {
+                activeCust: 1012, totalCust: 1200, churnRate: '15.67%', lostMRR: 73771, arrLost: '$885.2K / yr', riskAcc: 148, riskMRR: 27040, riskARR: 324500,
+                segRev: [73771, 0, 0, 0],
+                planRates: [0, 0, 16.2, 14.1],
+                tenureRates: [24.5, 18.2, 14.0, 10.2, 7.8]
+            },
+            'Mid-Market': {
+                activeCust: 1958, totalCust: 2400, churnRate: '18.42%', lostMRR: 64974, arrLost: '$779.6K / yr', riskAcc: 192, riskMRR: 23900, riskARR: 286800,
+                segRev: [0, 64974, 0, 0],
+                planRates: [0, 20.4, 16.2, 0],
+                tenureRates: [28.4, 19.8, 15.6, 11.4, 8.5]
+            },
+            'SMB': {
+                activeCust: 3379, totalCust: 4400, churnRate: '23.20%', lostMRR: 47476, arrLost: '$569.7K / yr', riskAcc: 224, riskMRR: 15350, riskARR: 184200,
+                segRev: [0, 0, 47476, 0],
+                planRates: [23.5, 20.4, 0, 0],
+                tenureRates: [34.2, 24.1, 18.9, 14.2, 10.8]
+            },
+            'Startup/Individual': {
+                activeCust: 1512, totalCust: 2000, churnRate: '24.40%', lostMRR: 17812, arrLost: '$213.7K / yr', riskAcc: 96, riskMRR: 6970, riskARR: 83620,
+                segRev: [0, 0, 0, 17812],
+                planRates: [23.5, 20.4, 0, 0],
+                tenureRates: [36.0, 25.8, 19.4, 15.0, 11.2]
+            }
+        };
+
+        let currentSegData = segmentDataMap['All'];
+        let chartSegRevInst, chartPlanExposureInst, chartTenureDecayInst;
+
+        function updateFilters() {
+            const seg = document.getElementById('segmentFilter').value;
+            const time = document.getElementById('timeFilter').value;
+            
+            currentSegData = segmentDataMap[seg] || segmentDataMap['All'];
+
+            // Time scaling multiplier
+            let timeFactor = 1.0;
+            if (time === '12M') timeFactor = 0.58;
+            else if (time === '90D') timeFactor = 0.17;
+
+            const dispActive = Math.round(currentSegData.activeCust);
+            const dispLostMRR = Math.round(currentSegData.lostMRR * (time === '24M' ? 1.0 : timeFactor * 1.4));
+            const dispRiskARR = Math.round(currentSegData.riskARR);
+
+            // Update KPI Scorecards
+            document.getElementById('kpiActiveCust').innerText = dispActive.toLocaleString();
+            document.getElementById('kpiChurnRate').innerText = currentSegData.churnRate;
+            document.getElementById('kpiLostMRR').innerText = '$' + dispLostMRR.toLocaleString();
+
+            // Update Chart datasets
+            if (chartSegRevInst) {
+                chartSegRevInst.data.datasets[0].data = currentSegData.segRev;
+                chartSegRevInst.update();
+            }
+            if (chartPlanExposureInst) {
+                chartPlanExposureInst.data.datasets[0].data = currentSegData.planRates;
+                chartPlanExposureInst.update();
+            }
+            if (chartTenureDecayInst) {
+                chartTenureDecayInst.data.datasets[0].data = currentSegData.tenureRates;
+                chartTenureDecayInst.update();
+            }
+
+            // Update Risk Queue
+            const filteredQueue = seg === 'All' ? queueData : queueData.filter(c => c.seg.toLowerCase().includes(seg.toLowerCase()) || seg.toLowerCase().includes(c.seg.toLowerCase()));
+            renderQueue(filteredQueue.length > 0 ? filteredQueue : queueData);
+
+            // Update Simulator baseline
+            simRecalc(document.getElementById('simSlider').value);
+
+            // Show Toast Confirmation
+            const toast = document.getElementById('actionToast');
+            document.getElementById('toastMsg').innerText = `Updated view: ${seg} segment | ${time} scope`;
+            toast.style.display = 'flex';
+            setTimeout(() => { toast.style.display = 'none'; }, 2000);
+        }
+
         // Live Risk Queue Sample Data
         const queueData = [
             { id: 'CUST-10492', seg: 'Enterprise', plan: 'Custom Tier', spend: 685.00, tenure: 4, inact: 16, score: 84.5, tier: 'Critical', driver: 'Severe Inactivity & Billing Hazard' },
@@ -959,19 +1224,19 @@
             { id: 'CUST-15721', seg: 'Enterprise', plan: 'Custom Tier', spend: 490.00, tenure: 3, inact: 9, score: 62.0, tier: 'High', driver: 'Feature Desertion' }
         ];
 
-        function renderQueue() {
+        function renderQueue(dataToRender = queueData) {
             const tbody = document.getElementById('riskQueueBody');
-            tbody.innerHTML = queueData.map(c => `
+            tbody.innerHTML = dataToRender.map(c => `
                 <tr>
                     <td class="mono"><b>${c.id}</b></td>
                     <td>${c.seg}</td>
                     <td>${c.plan}</td>
                     <td class="mono">$${c.spend.toFixed(2)}</td>
-                    <td>${c.tenure} Mo</td>
-                    <td class="mono">${c.inact} Days</td>
-                    <td><span class="mono" style="font-weight:700; color:${c.score >= 80 ? '#FB7185' : '#FBBF24'};">${c.score}</span> / 100</td>
-                    <td><span class="badge-risk ${c.tier.toLowerCase()}">${c.tier} Risk</span></td>
-                    <td style="color:#94A3B8; font-size:12.5px;">${c.driver}</td>
+                    <td>${c.tenure}&nbsp;Mo</td>
+                    <td class="mono">${c.inact}&nbsp;Days</td>
+                    <td><span class="mono" style="font-weight:700; color:${c.score >= 80 ? '#FB7185' : '#FBBF24'};">${c.score}</span>&nbsp;/&nbsp;100</td>
+                    <td><span class="badge-risk ${c.tier.toLowerCase()}">${c.tier}&nbsp;Risk</span></td>
+                    <td class="cell-driver">${c.driver}</td>
                     <td><button class="btn-trigger" onclick="triggerPlaybook('${c.id}')">Execute Playbook</button></td>
                 </tr>
             `).join('');
@@ -984,13 +1249,12 @@
             setTimeout(() => { toast.style.display = 'none'; }, 3200);
         }
 
-        // Simulator Logic
-        const totalRiskAcc = 660;
-        const totalRiskMRR = 73260;
-        const totalRiskARR = 879120;
-
         function simRecalc(val) {
             document.getElementById('simValDisplay').innerText = val + '%';
+            const totalRiskAcc = currentSegData.riskAcc;
+            const totalRiskMRR = currentSegData.riskMRR;
+            const totalRiskARR = currentSegData.riskARR;
+
             const acc = Math.round(totalRiskAcc * (val / 100));
             const mrr = Math.round(totalRiskMRR * (val / 100));
             const arr = Math.round(totalRiskARR * (val / 100));
@@ -1008,7 +1272,7 @@
             renderQueue();
 
             // 1. Segment Revenue Churn
-            new Chart(document.getElementById('chartSegRev'), {
+            chartSegRevInst = new Chart(document.getElementById('chartSegRev'), {
                 type: 'doughnut',
                 data: {
                     labels: ['Enterprise ($73.8K)', 'Mid-Market ($65.0K)', 'SMB ($47.5K)', 'Startup ($17.8K)'],
@@ -1031,7 +1295,7 @@
             });
 
             // 2. Plan Exposure
-            new Chart(document.getElementById('chartPlanExposure'), {
+            chartPlanExposureInst = new Chart(document.getElementById('chartPlanExposure'), {
                 type: 'bar',
                 data: {
                     labels: ['Basic ($29)', 'Pro ($79)', 'Enterprise ($249)', 'Custom Tier ($499+)'],
@@ -1056,7 +1320,7 @@
             });
 
             // 3. Tenure Decay Curve
-            new Chart(document.getElementById('chartTenureDecay'), {
+            chartTenureDecayInst = new Chart(document.getElementById('chartTenureDecay'), {
                 type: 'line',
                 data: {
                     labels: ['1–3 Mo (Onboarding)', '4–6 Mo (Early)', '7–12 Mo (Mid)', '13–18 Mo (Mature)', '19–24 Mo (Loyal)'],
