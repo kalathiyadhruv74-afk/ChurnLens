@@ -26,6 +26,22 @@ share/python-wheels/
 *.egg
 MANIFEST
 
+# Node & Frontend / Vercel
+node_modules/
+.vercel
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# AI Agent / IDE Internal Folders
+.agent/
+.agents/
+.gemini/
+.antigravity/
+.antigravity-ide/
+.system_generated/
+
 # PyInstaller
 *.manifest
 *.spec
@@ -53,8 +69,9 @@ cover/
 .ipynb_checkpoints
 */.ipynb_checkpoints/*
 
-# Environments
+# Environments & Secrets
 .env
+.env*.local
 .venv
 env/
 venv/
@@ -83,4 +100,3 @@ desktop.ini
 *.log
 scratch/
 tmp/
-.system_generated/
