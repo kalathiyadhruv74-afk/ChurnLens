@@ -1,0 +1,30 @@
+feature,importance
+days_since_last_login,0.8293866664254931
+sessions_last_30_days,0.139644501052263
+activity_change_pct,0.026160382667944238
+average_session_duration,0.004542876054877726
+monthly_spend,0.00014868308389798956
+key_feature_usage,7.431037344002246e-05
+tenure_months,9.549661816294223e-06
+feature_usage_count,5.929702209055155e-06
+age,5.5341379722234416e-06
+support_tickets,4.796820514318809e-06
+acquisition_channel_Organic Search,3.6183289252950706e-06
+subscription_plan_Pro,2.8291081796114344e-06
+payment_method_Credit Card,2.8152906685834155e-06
+acquisition_channel_Referral,2.599333732057469e-06
+unresolved_tickets,1.6432151376171117e-06
+customer_segment_SMB,1.5042562926433975e-06
+complaints,1.0227856887062247e-06
+failed_payments,3.328742198236937e-07
+payment_method_PayPal,2.615011474919056e-07
+acquisition_channel_Direct Sales,6.253155849503983e-08
+acquisition_channel_Paid Ads,3.601731869501591e-08
+subscription_plan_Custom Tier,3.036033671126529e-08
+acquisition_channel_Partner Affiliate,1.2875676029890095e-08
+subscription_plan_Enterprise,1.2318947673564225e-09
+plan_changes,2.6083881618984673e-10
+downgrades,2.4408010717740586e-11
+customer_segment_Startup/Individual,2.040906734589759e-11
+payment_method_Invoicing,3.1118026420077357e-12
+customer_segment_Mid-Market,2.792013708941592e-14
