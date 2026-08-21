@@ -3,1145 +3,1070 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ChurnLens — Customer Churn Analytics & Retention Intelligence Platform</title>
-  <meta name="description" content="Predict customer churn before it happens, discover root causes across the 90-day onboarding cliff, and execute automated retention playbooks with explainable 0-100 risk scoring.">
-  <meta name="keywords" content="SaaS churn analytics, customer retention intelligence, churn prediction ML, customer risk score, B2B SaaS revenue protection, onboarding cliff">
-  <meta property="og:title" content="ChurnLens — Retention Intelligence & Churn Analytics">
-  <meta property="og:description" content="Turn customer churn prediction into automated revenue protection with transparent 0-100 risk scoring and root-cause countermeasures.">
-  <meta property="og:type" content="website">
-  <meta name="twitter:card" content="summary_large_image">
+  <title>ChurnLens — Customer Churn Intelligence & Retention Analytics</title>
+  <meta name="description" content="Customer Churn Intelligence & Retention Analytics Platform. Real-time 0-100 risk scoring, root-cause diagnostics, and automated retention playbooks.">
   
-  <!-- CSS Stylesheet -->
+  <!-- Favicon & CSS -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230F172A' stroke-width='2.5'><circle cx='12' cy='12' r='10'/><circle cx='12' cy='12' r='4'/></svg>">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230EA5E9' stroke-width='2'><path d='M2 12h5l3 7 4-14 3 7h5'/></svg>">
+
+  <!-- Chart.js for Visualizations (with built-in native fallback) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 </head>
 <body>
 
-  <!-- Background Ambient Glows -->
-  <div class="ambient-glow ambient-glow-1"></div>
-  <div class="ambient-glow ambient-glow-2"></div>
-  <div class="ambient-glow ambient-glow-3"></div>
-
-  <!-- Floating Navigation Bar -->
-  <div class="navbar-wrapper">
-    <nav class="navbar" aria-label="Main Navigation">
-      <a href="#hero" class="nav-brand">
-        <div class="brand-icon-box">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- ========================================================================
+       1. PUBLIC SHORT LANDING VIEW (#/ or #landing)
+       ======================================================================== -->
+  <div id="landing-page" class="page-view" style="display: none;">
+    <header class="landing-navbar">
+      <a href="#/" class="sidebar-brand" style="text-decoration: none;">
+        <div class="brand-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
             <circle cx="12" cy="12" r="10"></circle>
-            <path d="m4.93 4.93 4.24 4.24"></path>
-            <path d="m14.83 9.17 4.24-4.24"></path>
-            <path d="m14.83 14.83 4.24 4.24"></path>
-            <path d="m9.17 14.83-4.24 4.24"></path>
             <circle cx="12" cy="12" r="4"></circle>
           </svg>
         </div>
-        <span class="brand-text">Churn<span>Lens</span></span>
+        <span class="brand-name">ChurnLens</span>
+        <span class="brand-version">v2.4 Engine</span>
       </a>
 
-      <ul class="nav-links">
-        <li><a href="#calculator" class="nav-link">ROI Calculator</a></li>
-        <li><a href="#architecture" class="nav-link">How It Works</a></li>
-        <li><a href="#risk-engine" class="nav-link">Risk Engine</a></li>
-        <li><a href="#root-causes" class="nav-link">Root Causes</a></li>
-        <li><a href="#playbooks" class="nav-link">Playbooks</a></li>
-        <li><a href="#pricing" class="nav-link">Pricing</a></li>
-      </ul>
-
-      <div class="nav-cta-group">
-        <a href="reports/interactive_dashboard.html" class="btn btn-outline-cyan btn-sm">
-          <span>Live Dashboard</span>
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <a href="#/dashboard" class="btn btn-primary btn-sm">
+          <span>Launch Analytics App</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         </a>
-        <button class="btn btn-secondary btn-sm" data-open-modal="demo-modal">Sign In</button>
-        <button class="btn btn-primary btn-sm" data-open-modal="demo-modal">
-          <span>Get Started</span>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-        </button>
-        <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="4" x2="20" y1="6" y2="6"/>
-            <line x1="4" x2="20" y1="12" y2="12"/>
-            <line x1="4" x2="20" y1="18" y2="18"/>
-          </svg>
-        </button>
       </div>
-    </nav>
+    </header>
+
+    <main class="landing-hero">
+      <div class="landing-container">
+        <div class="landing-hero-grid">
+          <div>
+            <div style="display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--brand-accent); background: var(--brand-accent-subtle); border: 1px solid var(--brand-accent-border); padding: 0.2rem 0.6rem; border-radius: var(--radius-sm); margin-bottom: 1rem;">
+              <span>Customer Churn Intelligence</span>
+            </div>
+
+            <h1 style="font-size: clamp(2.25rem, 4vw, 3.25rem); font-weight: 800; line-height: 1.15; margin-bottom: 1.25rem;">
+              Know who will churn.<br>
+              Understand why.<br>
+              Act before they leave.
+            </h1>
+
+            <p style="font-size: 1.0625rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 2rem;">
+              ChurnLens transforms product telemetry, engagement velocity, and payment signals into explainable <strong>0–100 risk scoring</strong> and automated retention countermeasures.
+            </p>
+
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+              <a href="#/dashboard" class="btn btn-primary btn-lg">
+                <span>Explore Live Dashboard</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
+              <a href="#/methodology" class="btn btn-secondary btn-lg">
+                <span>View ML Methodology</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Product Preview Mini Card -->
+          <div class="landing-preview-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border-light);">
+              <span style="font-size: 0.8125rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Live Telemetry Snapshot</span>
+              <span class="kpi-badge danger">High Risk Alert</span>
+            </div>
+
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+              <div>
+                <h4 style="font-size: 1rem; font-weight: 700;">Apex Cloud Systems</h4>
+                <p style="font-size: 0.75rem; color: var(--text-muted); margin: 0;">Enterprise Tier &bull; $420/mo MRR &bull; Month 2</p>
+              </div>
+              <div style="font-family: var(--font-display); font-size: 1.85rem; font-weight: 800; color: var(--risk-critical);" class="tnum">
+                78<span style="font-size: 0.875rem; color: var(--text-muted);">/100</span>
+              </div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem; font-size: 0.8125rem;">
+              <div style="display: flex; justify-content: space-between; padding: 0.4rem 0.6rem; background: var(--bg-surface-subtle); border-radius: var(--radius-xs);">
+                <span>30-Day Activity Velocity</span>
+                <span style="font-weight: 700; color: var(--risk-critical);" class="tnum">&darr; 47% drop</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; padding: 0.4rem 0.6rem; background: var(--bg-surface-subtle); border-radius: var(--radius-xs);">
+                <span>Inactivity Window</span>
+                <span style="font-weight: 700; color: var(--risk-critical);" class="tnum">14 days inactive</span>
+              </div>
+            </div>
+
+            <div style="padding: 0.75rem; background: var(--bg-surface-subtle); border-left: 3px solid var(--brand-accent); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 0.75rem;">
+              <strong>Prescribed Intervention:</strong> High-Touch Retention Outreach &amp; Senior CSM SLA
+            </div>
+          </div>
+        </div>
+
+        <!-- 3 Core Analytical Capabilities -->
+        <div class="capabilities-grid">
+          <div class="capability-card">
+            <div class="capability-icon-box">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <h3 style="font-size: 1.0625rem; font-weight: 700; margin-bottom: 0.5rem;">Root Cause Diagnostics</h3>
+            <p style="font-size: 0.875rem; color: var(--text-secondary);">
+              Pinpoint the 90-day onboarding cliff and isolate behavioral triggers that precede customer cancellations.
+            </p>
+          </div>
+
+          <div class="capability-card">
+            <div class="capability-icon-box">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <h3 style="font-size: 1.0625rem; font-weight: 700; margin-bottom: 0.5rem;">0–100 Explainable Risk Scoring</h3>
+            <p style="font-size: 0.875rem; color: var(--text-secondary);">
+              Transparent weighted composite scores decomposing inactivity, velocity drop, payment friction, and adoption.
+            </p>
+          </div>
+
+          <div class="capability-card">
+            <div class="capability-icon-box">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            </div>
+            <h3 style="font-size: 1.0625rem; font-weight: 700; margin-bottom: 0.5rem;">Automated Playbooks</h3>
+            <p style="font-size: 0.875rem; color: var(--text-secondary);">
+              Trigger proactive Slack alerts, smart dunning retries, and high-touch VIP escalations when thresholds cross.
+            </p>
+          </div>
+        </div>
+      </div>
+    </main>
   </div>
 
-  <!-- Hero Section -->
-  <header id="hero" class="hero-section">
-    <div class="container">
-      <div class="hero-pill-badge">
-        <span class="status-dot"></span>
-        <span>ChurnLens v2.4 Live &bull; Gradient Boosting ML Engine</span>
+  <!-- ========================================================================
+       2. MULTI-PAGE APPLICATION LAYOUT (SIDEBAR + CONTEXTUAL TOPBAR + ROUTES)
+       ======================================================================== -->
+  <div class="app-layout" id="app-layout">
+    
+    <!-- Persistent Desktop Sidebar -->
+    <aside class="app-sidebar" id="app-sidebar">
+      <div>
+        <div class="sidebar-header">
+          <a href="#/dashboard" class="sidebar-brand">
+            <div class="brand-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <circle cx="12" cy="12" r="10"></circle>
+                <circle cx="12" cy="12" r="4"></circle>
+              </svg>
+            </div>
+            <span class="brand-name">ChurnLens</span>
+            <span class="brand-version">v2.4</span>
+          </a>
+        </div>
+
+        <ul class="sidebar-nav-list">
+          <li class="sidebar-nav-heading">Intelligence</li>
+          <li>
+            <a href="#/dashboard" class="sidebar-nav-link active" data-route="dashboard">
+              <svg class="nav-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+              <span class="nav-link-text">Overview</span>
+            </a>
+          </li>
+          <li>
+            <a href="#/analysis" class="sidebar-nav-link" data-route="analysis">
+              <svg class="nav-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              <span class="nav-link-text">Churn Analysis</span>
+            </a>
+          </li>
+          <li>
+            <a href="#/root-causes" class="sidebar-nav-link" data-route="root-causes">
+              <svg class="nav-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              <span class="nav-link-text">Root Causes</span>
+            </a>
+          </li>
+          <li>
+            <a href="#/risk" class="sidebar-nav-link" data-route="risk">
+              <svg class="nav-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <span class="nav-link-text">Risk Intelligence</span>
+            </a>
+          </li>
+          <li>
+            <a href="#/customers" class="sidebar-nav-link" data-route="customers">
+              <svg class="nav-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              <span class="nav-link-text">Customers</span>
+              <span class="nav-badge-pill tnum">660 At-Risk</span>
+            </a>
+          </li>
+          <li>
+            <a href="#/playbooks" class="sidebar-nav-link" data-route="playbooks">
+              <svg class="nav-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              <span class="nav-link-text">Playbooks</span>
+            </a>
+          </li>
+
+          <li class="sidebar-nav-heading">Engineering</li>
+          <li>
+            <a href="#/methodology" class="sidebar-nav-link" data-route="methodology">
+              <svg class="nav-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+              <span class="nav-link-text">Methodology</span>
+            </a>
+          </li>
+        </ul>
       </div>
 
-      <h1 class="hero-headline">
-        Stop Customer Churn <br>
-        <span class="gradient-text">Before It Costs You Millions</span>
-      </h1>
-
-      <p class="hero-subhead">
-        Transform black-box churn predictions into transparent <strong>0–100 risk scoring</strong>, pinpoint root causes across the <strong>90-day onboarding cliff</strong>, and trigger automated retention playbooks that protect your recurring revenue.
-      </p>
-
-      <div class="hero-actions">
-        <button class="btn btn-primary btn-lg" data-open-modal="demo-modal">
-          <span>Calculate Your Retention Lift</span>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-        </button>
-        <a href="#risk-engine" class="btn btn-secondary btn-lg">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          <span>Try Live Risk Simulator</span>
+      <div class="sidebar-footer">
+        <a href="#/" class="sidebar-nav-link" style="color: var(--text-muted);">
+          <svg class="nav-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+          <span class="nav-link-text">Landing Intro</span>
         </a>
-      </div>
-
-      <!-- Live Analytical Scope Metrics -->
-      <div class="hero-stats-strip">
-        <div class="stat-item">
-          <div class="stat-number">10,000+</div>
-          <div class="stat-label">SaaS Accounts Analyzed</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number" style="color: var(--rose-danger);">$2.74M</div>
-          <div class="stat-label">Annual Churn Baseline</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number" style="color: var(--emerald-success);">35.4%</div>
-          <div class="stat-label">Avg Retention Recovery</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number" style="color: var(--cyan-hover);">1.000</div>
-          <div class="stat-label">ROC-AUC Model Benchmark</div>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <!-- Integration Ecosystem & Social Proof -->
-  <section class="proof-section">
-    <div class="container">
-      <div class="proof-title">Seamlessly Integrated With Your SaaS Revenue Stack</div>
-      <div class="logo-cloud">
-        <div class="partner-logo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-          <span>Stripe Billing</span>
-        </div>
-        <div class="partner-logo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
-          <span>Salesforce CRM</span>
-        </div>
-        <div class="partner-logo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m10 15 5-3-5-3v6Z"/></svg>
-          <span>HubSpot</span>
-        </div>
-        <div class="partner-logo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
-          <span>Segment CDP</span>
-        </div>
-        <div class="partner-logo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
-          <span>Snowflake Data</span>
-        </div>
-        <div class="partner-logo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/></svg>
-          <span>Slack Alerts</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Interactive ROI & Churn Savings Calculator -->
-  <section id="calculator" class="section-spacing">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-tag">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-          <span>Revenue Impact Model</span>
-        </div>
-        <h2 class="section-title">Calculate Your Churn Revenue Recovery</h2>
-        <p class="section-subtitle">
-          Adjust your current SaaS metrics below to see how much annual recurring revenue ChurnLens can prevent from leaving your business.
-        </p>
-      </div>
-
-      <div class="calc-card">
-        <div class="calc-grid">
-          <!-- Sliders -->
-          <div class="calc-controls">
-            <div class="calc-control-group">
-              <div class="calc-label-row">
-                <span class="calc-label">Active Customer Accounts</span>
-                <span id="calc-customers-val" class="calc-value-badge">10,000</span>
-              </div>
-              <input type="range" id="calc-customers" class="range-slider" min="500" max="30000" step="500" value="10000" aria-label="Active Customer Accounts Slider">
-            </div>
-
-            <div class="calc-control-group">
-              <div class="calc-label-row">
-                <span class="calc-label">Average Monthly Spend (MRR / Account)</span>
-                <span id="calc-mrr-val" class="calc-value-badge">$107</span>
-              </div>
-              <input type="range" id="calc-mrr" class="range-slider" min="20" max="600" step="5" value="107" aria-label="Average MRR Slider">
-            </div>
-
-            <div class="calc-control-group">
-              <div class="calc-label-row">
-                <span class="calc-label">Annual Customer Churn Rate</span>
-                <span id="calc-churn-val" class="calc-value-badge">21.4%</span>
-              </div>
-              <input type="range" id="calc-churn" class="range-slider" min="5" max="40" step="0.1" value="21.4" aria-label="Annual Churn Rate Slider">
-            </div>
-          </div>
-
-          <!-- Dynamic Output Display -->
-          <div class="calc-results-panel">
-            <div class="calc-result-hero">
-              <div class="calc-result-title">Projected ARR Protected Annually</div>
-              <div id="calc-arr-saved" class="calc-result-amount">$972,138</div>
-              <div style="font-size: 0.875rem; color: var(--text-secondary); margin-top: 0.25rem;">
-                Based on verified 35.4% retention lift across high-risk accounts
-              </div>
-            </div>
-
-            <div class="calc-breakdown-row">
-              <div class="breakdown-box">
-                <div class="breakdown-label">Gross Churn Baseline</div>
-                <div id="calc-lost-arr" class="breakdown-val">$2.75M/yr</div>
-              </div>
-              <div class="breakdown-box">
-                <div class="breakdown-label">Estimated ROI Multiple</div>
-                <div id="calc-roi-multiple" class="breakdown-val" style="color: var(--cyan-hover);">162x ROI</div>
-              </div>
-            </div>
-
-            <div style="margin-top: 1.5rem;">
-              <button class="btn btn-primary btn-sm" style="width: 100%;" data-open-modal="demo-modal">
-                <span>Unlock Your Custom Retention Audit</span>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Core Architecture: 4 Pillars -->
-  <section id="architecture" class="section-spacing" style="background: rgba(13, 19, 34, 0.3);">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-tag">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
-          <span>End-to-End Retention Architecture</span>
-        </div>
-        <h2 class="section-title">Beyond Black-Box Classification</h2>
-        <p class="section-subtitle">
-          Most ML models stop at binary labels. ChurnLens executes a complete 4-stage retention loop from telemetry ingestion to automated countermeasure dispatch.
-        </p>
-      </div>
-
-      <div class="pillars-grid">
-        <!-- Pillar 1 -->
-        <div class="pillar-card">
-          <div class="pillar-step-badge">STEP 01</div>
-          <div class="pillar-icon-box">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-          </div>
-          <h3 class="pillar-title">Churn Analysis</h3>
-          <p class="pillar-desc">
-            Continuous cohort telemetry tracking across customer segments (Enterprise, Mid-Market, SMB, Startup) with MRR-weighted impact analysis.
-          </p>
-          <div class="pillar-meta">
-            <span>60.6% revenue loss concentrated in Enterprise</span>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-          </div>
-        </div>
-
-        <!-- Pillar 2 -->
-        <div class="pillar-card">
-          <div class="pillar-step-badge">STEP 02</div>
-          <div class="pillar-icon-box">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-          </div>
-          <h3 class="pillar-title">Root Cause Discovery</h3>
-          <p class="pillar-desc">
-            Disentangles superficial symptoms from true root causes: isolates 41.2% onboarding failures and 24.6% involuntary billing payment declines.
-          </p>
-          <div class="pillar-meta">
-            <span>Pinpoints 90-day onboarding cliff</span>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-          </div>
-        </div>
-
-        <!-- Pillar 3 -->
-        <div class="pillar-card">
-          <div class="pillar-step-badge">STEP 03</div>
-          <div class="pillar-icon-box">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="m4.93 4.93 4.24 4.24"></path><path d="m14.83 9.17 4.24-4.24"></path></svg>
-          </div>
-          <h3 class="pillar-title">0–100 Risk Scoring</h3>
-          <p class="pillar-desc">
-            Transparent composite scoring weighting 4 vectors (Inactivity, Velocity, Operational Friction, Adoption) for explainable CSM prioritization.
-          </p>
-          <div class="pillar-meta">
-            <span>Low, Med, High & Critical Tiers</span>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-          </div>
-        </div>
-
-        <!-- Pillar 4 -->
-        <div class="pillar-card">
-          <div class="pillar-step-badge">STEP 04</div>
-          <div class="pillar-icon-box">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
-          </div>
-          <h3 class="pillar-title">Retention Playbooks</h3>
-          <p class="pillar-desc">
-            Automated countermeasures mapped directly to risk drivers: Smart Dunning, 4-Hour VIP Escalation SLAs, and guided in-app onboarding nudges.
-          </p>
-          <div class="pillar-meta">
-            <span>Instant webhook & Slack alerts</span>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Interactive 0–100 Risk Scoring Engine Sandbox -->
-  <section id="risk-engine" class="section-spacing">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-tag">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-          <span>Interactive Risk Simulator</span>
-        </div>
-        <h2 class="section-title">Live 0–100 Risk Scoring Engine</h2>
-        <p class="section-subtitle">
-          Test how the ChurnLens algorithmic weighting engine calculates real-time account risk, assigns strategic retention tiers, and prescribes instant countermeasures.
-        </p>
-      </div>
-
-      <div class="risk-engine-box">
-        <div class="risk-sandbox-grid">
-          <!-- Control Sliders & Toggles -->
-          <div class="simulator-controls">
-            <!-- Vector 1: Inactivity -->
-            <div class="control-card">
-              <div class="control-header">
-                <div class="control-title-box">
-                  <svg class="control-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                  <span class="control-name">Inactivity & Recency Hazard</span>
-                </div>
-                <div id="sub-inactivity" class="subscore-indicator">9.0/25</div>
-              </div>
-              <div class="calc-label-row">
-                <span style="font-size: 0.8125rem; color: var(--text-secondary);">Days Since Last Login</span>
-                <span id="risk-inactivity-val" style="font-size: 0.8125rem; font-weight: 700; color: var(--cyan-hover);">5 days</span>
-              </div>
-              <input type="range" id="risk-inactivity" class="range-slider" min="0" max="45" step="1" value="5" aria-label="Days Inactive Slider">
-            </div>
-
-            <!-- Vector 2: Velocity Drop -->
-            <div class="control-card">
-              <div class="control-header">
-                <div class="control-title-box">
-                  <svg class="control-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
-                  <span class="control-name">Engagement Velocity Dropoff</span>
-                </div>
-                <div id="sub-velocity" class="subscore-indicator">7.5/25</div>
-              </div>
-              <div class="calc-label-row">
-                <span style="font-size: 0.8125rem; color: var(--text-secondary);">30-Day Activity Change</span>
-                <span id="risk-velocity-val" style="font-size: 0.8125rem; font-weight: 700; color: var(--cyan-hover);">-20%</span>
-              </div>
-              <input type="range" id="risk-velocity" class="range-slider" min="-80" max="30" step="5" value="-20" aria-label="Activity Change Slider">
-            </div>
-
-            <!-- Vector 3: Operational Friction -->
-            <div class="control-card">
-              <div class="control-header">
-                <div class="control-title-box">
-                  <svg class="control-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-                  <span class="control-name">Operational Friction (Billing & Tickets)</span>
-                </div>
-                <div id="sub-friction" class="subscore-indicator">0.0/25</div>
-              </div>
-              
-              <div style="margin-bottom: 0.75rem;">
-                <div style="font-size: 0.8125rem; color: var(--text-secondary); margin-bottom: 0.25rem;">Failed Billing Payment Events:</div>
-                <div class="toggle-btn-group">
-                  <button class="toggle-btn friction-pmt-btn active" data-val="0">0 (Clean)</button>
-                  <button class="toggle-btn friction-pmt-btn" data-val="1">1 Failed</button>
-                  <button class="toggle-btn friction-pmt-btn" data-val="2">2+ Declined</button>
-                </div>
-              </div>
-
-              <div>
-                <div style="font-size: 0.8125rem; color: var(--text-secondary); margin-bottom: 0.25rem;">Unresolved Support Escalations:</div>
-                <div class="toggle-btn-group">
-                  <button class="toggle-btn friction-ticket-btn active" data-val="0">0 Tickets</button>
-                  <button class="toggle-btn friction-ticket-btn" data-val="1">1 Ticket</button>
-                  <button class="toggle-btn friction-ticket-btn" data-val="2">2+ Critical</button>
-                </div>
-              </div>
-            </div>
-
-            <!-- Vector 4: Feature Adoption -->
-            <div class="control-card">
-              <div class="control-header">
-                <div class="control-title-box">
-                  <svg class="control-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                  <span class="control-name">Core Feature Activation</span>
-                </div>
-                <div id="sub-feature" class="subscore-indicator">0.0/25</div>
-              </div>
-              <div class="toggle-btn-group">
-                <button class="toggle-btn feature-btn active" data-val="1">Activated (Adoption OK)</button>
-                <button class="toggle-btn feature-btn" data-val="0">Unadopted (High Risk)</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Real-Time Gauge Output -->
-          <div class="risk-output-card">
-            <div>
-              <h3 style="font-size: 1.125rem; font-weight: 700; color: var(--text-primary);">Composite Churn Risk Score</h3>
-              <p style="font-size: 0.8125rem; color: var(--text-secondary); margin-top: 0.25rem;">
-                Weighted sum of all 4 telemetry sub-vectors
-              </p>
-
-              <!-- Circular Gauge -->
-              <div class="gauge-container">
-                <svg class="gauge-svg" viewBox="0 0 160 160">
-                  <circle class="gauge-bg" cx="80" cy="80" r="70"></circle>
-                  <circle id="gauge-progress-circle" class="gauge-progress" cx="80" cy="80" r="70"></circle>
-                </svg>
-                <div class="gauge-center-text">
-                  <div id="gauge-score-val" class="gauge-score">16</div>
-                  <div class="gauge-max">/ 100 PTS</div>
-                </div>
-              </div>
-
-              <!-- Risk Tier Badge -->
-              <div id="risk-tier-badge" class="risk-tier-badge tier-low">
-                Low Risk (Score: 16)
-              </div>
-            </div>
-
-            <!-- Prescribed Playbook Box -->
-            <div class="prescribed-action-box">
-              <div class="action-label">Prescribed Countermeasure</div>
-              <div id="prescribed-action-title" class="action-title">Automated Loyalty & Value Expansion</div>
-              <div id="prescribed-action-desc" class="action-desc">
-                Healthy customer. Eligible for automated quarterly expansion suggestions and champion rewards.
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Root Cause Intelligence & Onboarding Cliff -->
-  <section id="root-causes" class="section-spacing" style="background: rgba(13, 19, 34, 0.3);">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-tag">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
-          <span>Root Cause Intelligence</span>
-        </div>
-        <h2 class="section-title">The 90-Day Onboarding Cliff</h2>
-        <p class="section-subtitle">
-          Over 42.1% of all customer churn events occur within the first 90 days. ChurnLens pinpoints exact failure mechanisms so you can intervene before churn is irreversible.
-        </p>
-      </div>
-
-      <!-- Tab Buttons -->
-      <div class="tab-navigation" data-tabs="root-cause">
-        <button class="tab-btn active" data-tab="tab-cliff">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-          <span>Tenure & Onboarding Cliff</span>
-        </button>
-        <button class="tab-btn" data-tab="tab-causes">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-          <span>Root Cause Distribution</span>
-        </button>
-        <button class="tab-btn" data-tab="tab-indicators">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          <span>Hazard Multipliers</span>
+        <button class="sidebar-collapse-btn" id="sidebar-toggle-btn" aria-label="Toggle sidebar width">
+          <svg class="nav-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="11 19 4 12 11 5"/><polyline points="18 19 11 12 18 5"/></svg>
+          <span class="collapse-text">Collapse</span>
         </button>
       </div>
+    </aside>
 
-      <!-- Tab Content 1: Onboarding Cliff Timeline -->
-      <div id="tab-cliff" class="tab-content active" data-tab-content="root-cause">
-        <div class="timeline-cliff">
-          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
-            <div>
-              <h3 style="font-size: 1.25rem;">Churn Hazard Rate by Account Lifecycle Tenure</h3>
-              <p style="font-size: 0.875rem; color: var(--text-secondary);">Accounts surviving past Month 12 with active key feature adoption stabilize at 88.8% retention.</p>
+    <!-- Main Workspace Area -->
+    <main class="app-main" id="app-main">
+      
+      <!-- Contextual Dynamic Topbar -->
+      <header class="app-topbar">
+        <div class="topbar-left">
+          <button class="mobile-menu-toggle" id="mobile-menu-btn" aria-label="Open navigation drawer">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <div class="topbar-title-group">
+            <h2 class="topbar-page-title" id="page-header-title">Executive Overview</h2>
+            <p class="topbar-page-desc" id="page-header-desc">High-level summary of customer churn health and revenue exposure.</p>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <select class="time-range-select" aria-label="Select date range">
+            <option value="24m" selected>Full 24-Month Scope</option>
+            <option value="90d">Last 90 Days</option>
+            <option value="30d">Last 30 Days</option>
+          </select>
+          <a href="reports/interactive_dashboard.html" target="_blank" class="btn btn-secondary btn-sm">
+            <span>Power BI</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+        </div>
+      </header>
+
+      <!-- Dynamic Page Container -->
+      <div class="app-content">
+
+        <!-- ====================================================================
+             PAGE: DASHBOARD / OVERVIEW (#/dashboard)
+             ==================================================================== -->
+        <div id="dashboard-page" class="page-view active-route">
+          <!-- 4 Executive KPI Cards -->
+          <div class="kpi-grid">
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <span class="kpi-label">Overall Churn Rate</span>
+                <span class="kpi-badge danger">2,139 / 10,000</span>
+              </div>
+              <div class="kpi-value tnum" style="color: var(--risk-critical);">21.39%</div>
+              <div class="kpi-subtext">Baseline customer attrition</div>
             </div>
-            <div class="calc-value-badge" style="color: var(--rose-danger); border-color: rgba(244, 63, 94, 0.4);">
-              42.1% Cliff Concentration
+
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <span class="kpi-label">Customers Analyzed</span>
+                <span class="kpi-badge neutral">100% Data Scope</span>
+              </div>
+              <div class="kpi-value tnum">10,000</div>
+              <div class="kpi-subtext">Relational subscription accounts</div>
+            </div>
+
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <span class="kpi-label">Annual Revenue Lost</span>
+                <span class="kpi-badge warning">$228.8K / mo</span>
+              </div>
+              <div class="kpi-value tnum">$2,746,152</div>
+              <div class="kpi-subtext">Baseline annualized ARR leakage</div>
+            </div>
+
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <span class="kpi-label">Active Revenue at Risk</span>
+                <span class="kpi-badge danger">660 Accounts</span>
+              </div>
+              <div class="kpi-value tnum" style="color: var(--risk-high);">$879,120</div>
+              <div class="kpi-subtext">Immediate target retention cohort</div>
             </div>
           </div>
 
-          <div class="cliff-bars-container">
-            <div class="cliff-row">
-              <div class="cliff-label">Months 1–3</div>
-              <div class="cliff-bar-track">
-                <div class="cliff-bar-fill" style="width: 31.8%; background: linear-gradient(90deg, #F43F5E, #E11D48);"></div>
+          <!-- Split: Monthly Trend + Top Churn Drivers -->
+          <div class="dashboard-split-grid">
+            <div class="analytics-card">
+              <div class="card-header-row">
+                <h3 class="card-title">Monthly Churn Trend (Months 1–24)</h3>
+                <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 500;">Hazard peaks in Month 1–3</span>
               </div>
-              <div class="cliff-pct" style="color: var(--rose-danger);">31.8% Churn</div>
+              <div style="width: 100%; height: 260px; position: relative;">
+                <canvas id="overviewTrendCanvas"></canvas>
+              </div>
             </div>
 
-            <div class="cliff-row">
-              <div class="cliff-label">Months 4–6</div>
-              <div class="cliff-bar-track">
-                <div class="cliff-bar-fill" style="width: 22.4%; background: linear-gradient(90deg, #F59E0B, #D97706);"></div>
+            <div class="analytics-card">
+              <div class="card-header-row">
+                <h3 class="card-title">Top 3 Churn Drivers</h3>
+                <a href="#/root-causes" style="font-size: 0.75rem; color: var(--brand-accent); font-weight: 600;">Deep Dive &rarr;</a>
               </div>
-              <div class="cliff-pct" style="color: var(--amber-warning);">22.4% Churn</div>
+              <div class="top-drivers-list">
+                <div class="driver-mini-row">
+                  <div>
+                    <div style="font-size: 0.8125rem; font-weight: 700;">Low Feature Adoption</div>
+                    <div style="font-size: 0.6875rem; color: var(--text-muted);">Unactivated core automations</div>
+                  </div>
+                  <span class="kpi-badge danger tnum">41.2% Share</span>
+                </div>
+                <div class="driver-mini-row">
+                  <div>
+                    <div style="font-size: 0.8125rem; font-weight: 700;">Involuntary Billing Declines</div>
+                    <div style="font-size: 0.6875rem; color: var(--text-muted);">Failed cards without dunning</div>
+                  </div>
+                  <span class="kpi-badge warning tnum">24.6% Share</span>
+                </div>
+                <div class="driver-mini-row">
+                  <div>
+                    <div style="font-size: 0.8125rem; font-weight: 700;">Support Friction Escalations</div>
+                    <div style="font-size: 0.6875rem; color: var(--text-muted);">&ge; 2 unresolved tickets</div>
+                  </div>
+                  <span class="kpi-badge neutral tnum">18.1% Share</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Split: High-Risk Customer Preview + Recommended Actions -->
+          <div class="dashboard-split-grid">
+            <div class="analytics-card">
+              <div class="card-header-row">
+                <h3 class="card-title">High-Risk Customer Accounts (Top Priority)</h3>
+                <a href="#/customers" style="font-size: 0.75rem; color: var(--brand-accent); font-weight: 600;">View All 660 Accounts &rarr;</a>
+              </div>
+              <table class="high-risk-preview-table">
+                <thead>
+                  <tr>
+                    <th>Customer Name</th>
+                    <th>Segment</th>
+                    <th>MRR</th>
+                    <th>Risk Score</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="overview-high-risk-tbody">
+                  <tr onclick="window.location.hash='#/customers/CUST-1001'">
+                    <td><strong>Apex Cloud Systems</strong></td>
+                    <td>Enterprise</td>
+                    <td class="tnum">$420.00</td>
+                    <td><span class="kpi-badge danger tnum">Risk: 78/100</span></td>
+                    <td><a href="#/customers/CUST-1001" class="btn btn-secondary btn-sm" style="padding: 0.2rem 0.5rem; font-size: 0.6875rem;">Inspect</a></td>
+                  </tr>
+                  <tr onclick="window.location.hash='#/customers/CUST-1002'">
+                    <td><strong>Quantum Analytics Inc.</strong></td>
+                    <td>Enterprise</td>
+                    <td class="tnum">$480.00</td>
+                    <td><span class="kpi-badge danger tnum">Risk: 85/100</span></td>
+                    <td><a href="#/customers/CUST-1002" class="btn btn-secondary btn-sm" style="padding: 0.2rem 0.5rem; font-size: 0.6875rem;">Inspect</a></td>
+                  </tr>
+                  <tr onclick="window.location.hash='#/customers/CUST-1003'">
+                    <td><strong>HyperFlow Networks</strong></td>
+                    <td>Enterprise</td>
+                    <td class="tnum">$380.00</td>
+                    <td><span class="kpi-badge danger tnum">Risk: 68/100</span></td>
+                    <td><a href="#/customers/CUST-1003" class="btn btn-secondary btn-sm" style="padding: 0.2rem 0.5rem; font-size: 0.6875rem;">Inspect</a></td>
+                  </tr>
+                  <tr onclick="window.location.hash='#/customers/CUST-1004'">
+                    <td><strong>Nexus Logistics Hub</strong></td>
+                    <td>Mid-Market</td>
+                    <td class="tnum">$290.00</td>
+                    <td><span class="kpi-badge danger tnum">Risk: 72/100</span></td>
+                    <td><a href="#/customers/CUST-1004" class="btn btn-secondary btn-sm" style="padding: 0.2rem 0.5rem; font-size: 0.6875rem;">Inspect</a></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
 
-            <div class="cliff-row">
-              <div class="cliff-label">Months 7–12</div>
-              <div class="cliff-bar-track">
-                <div class="cliff-bar-fill" style="width: 17.1%; background: linear-gradient(90deg, #6366F1, #4F46E5);"></div>
+            <div class="analytics-card">
+              <div class="card-header-row">
+                <h3 class="card-title">Key Prescribed Retention Actions</h3>
+                <a href="#/playbooks" style="font-size: 0.75rem; color: var(--brand-accent); font-weight: 600;">Playbooks &rarr;</a>
               </div>
-              <div class="cliff-pct" style="color: var(--indigo-primary);">17.1% Churn</div>
-            </div>
-
-            <div class="cliff-row">
-              <div class="cliff-label">Months 13–18</div>
-              <div class="cliff-bar-track">
-                <div class="cliff-bar-fill" style="width: 12.8%; background: linear-gradient(90deg, #0EA5E9, #0284C7);"></div>
+              <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <div style="padding: 0.75rem; background: var(--bg-surface-subtle); border-left: 3px solid var(--risk-critical); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 0.8125rem;">
+                  <strong style="color: var(--text-primary);">Deploy Smart Dunning Grace Lock:</strong> Recover up to 35% of failed billing accounts ($75K ARR preserved).
+                </div>
+                <div style="padding: 0.75rem; background: var(--bg-surface-subtle); border-left: 3px solid var(--risk-medium); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 0.8125rem;">
+                  <strong style="color: var(--text-primary);">Day 1–14 Guided Activation Nudge:</strong> Intervene before new signups hit the 90-day onboarding cliff.
+                </div>
+                <div style="padding: 0.75rem; background: var(--bg-surface-subtle); border-left: 3px solid var(--info-accent); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 0.8125rem;">
+                  <strong style="color: var(--text-primary);">VIP 4-Hour CSM Support SLA:</strong> Direct high-value accounts ($150+ MRR) to senior retention reps.
+                </div>
               </div>
-              <div class="cliff-pct" style="color: var(--cyan-hover);">12.8% Churn</div>
-            </div>
-
-            <div class="cliff-row">
-              <div class="cliff-label">Months 19–24</div>
-              <div class="cliff-bar-track">
-                <div class="cliff-bar-fill" style="width: 9.6%; background: linear-gradient(90deg, #10B981, #059669);"></div>
-              </div>
-              <div class="cliff-pct" style="color: var(--emerald-success);">9.6% Churn</div>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Tab Content 2: Root Cause Distribution -->
-      <div id="tab-causes" class="tab-content" data-tab-content="root-cause">
-        <div class="root-cause-grid">
-          <div class="root-cause-card">
-            <span class="rc-share-tag rc-share-danger">41.2% OF TOTAL CHURN</span>
-            <h3 style="font-size: 1.15rem; margin-bottom: 0.5rem;">Onboarding Failure & Low Adoption</h3>
-            <p style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1rem;">
-              Failure to activate core automation within 14 days increases churn hazard to 38.4%.
-            </p>
-            <div style="font-size: 0.8125rem; font-weight: 600; color: var(--cyan-hover);">
-              Prescribed: Day 3 & 7 Guided Setup Nudges
+        <!-- ====================================================================
+             PAGE: CHURN ANALYSIS (#/analysis)
+             ==================================================================== -->
+        <div id="analysis-page" class="page-view">
+          <!-- Analytical Filter Bar -->
+          <div class="filter-bar">
+            <div class="filter-group">
+              <span>Segment:</span>
+              <select class="filter-select" id="filter-segment">
+                <option value="all">All Segments (10,000)</option>
+                <option value="Enterprise">Enterprise (1,200)</option>
+                <option value="Mid-Market">Mid-Market (2,400)</option>
+                <option value="SMB">SMB (4,400)</option>
+                <option value="Startup">Startup (2,000)</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <span>Plan:</span>
+              <select class="filter-select" id="filter-plan">
+                <option value="all">All Plans</option>
+                <option value="Enterprise">Enterprise Tier</option>
+                <option value="Pro">Pro Tier</option>
+                <option value="Custom">Custom Tier</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <span>Tenure Window:</span>
+              <select class="filter-select" id="filter-tenure">
+                <option value="all">Full Lifecycle (1–24 Mo)</option>
+                <option value="onboarding">0–90 Days (Cliff)</option>
+                <option value="mature">12+ Months (Mature)</option>
+              </select>
             </div>
           </div>
 
-          <div class="root-cause-card">
-            <span class="rc-share-tag rc-share-warning">24.6% OF TOTAL CHURN</span>
-            <h3 style="font-size: 1.15rem; margin-bottom: 0.5rem;">Involuntary Billing Declines</h3>
-            <p style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1rem;">
-              Credit card and payment gateway declines without intelligent dunning lead to 68.4% involuntary cancellations.
-            </p>
-            <div style="font-size: 0.8125rem; font-weight: 600; color: var(--cyan-hover);">
-              Prescribed: Smart Dunning Sequence & Grace Window
+          <!-- 2-Column Charts Grid -->
+          <div class="analysis-grid-2col">
+            <div class="analytics-card">
+              <div class="card-header-row">
+                <h3 class="card-title">Churn Hazard by Customer Tenure (Months 1–24)</h3>
+              </div>
+              <div style="width: 100%; height: 260px; position: relative;">
+                <canvas id="analysisTenureCanvas"></canvas>
+              </div>
+            </div>
+
+            <div class="analytics-card">
+              <div class="card-header-row">
+                <h3 class="card-title">Lost ARR Share by Customer Segment</h3>
+              </div>
+              <div style="width: 100%; height: 260px; position: relative;">
+                <canvas id="analysisSegmentCanvas"></canvas>
+              </div>
             </div>
           </div>
 
-          <div class="root-cause-card">
-            <span class="rc-share-tag rc-share-indigo">18.1% OF TOTAL CHURN</span>
-            <h3 style="font-size: 1.15rem; margin-bottom: 0.5rem;">Support Escalation Friction</h3>
-            <p style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1rem;">
-              Accounts with &ge; 2 unresolved tickets experience a churn hazard spike from 14.8% to 54.6%.
-            </p>
-            <div style="font-size: 0.8125rem; font-weight: 600; color: var(--cyan-hover);">
-              Prescribed: 4-Hour VIP CSM Escalation SLA
+          <!-- Customer Segment Deep-Dive Table -->
+          <div class="analytics-card">
+            <div class="card-header-row">
+              <h3 class="card-title">Customer Segment Concentration &amp; Revenue Leakage</h3>
             </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Tab Content 3: Hazard Multipliers -->
-      <div id="tab-indicators" class="tab-content" data-tab-content="root-cause">
-        <div class="timeline-cliff">
-          <h3 style="font-size: 1.25rem; margin-bottom: 1.5rem;">Leading Predictive Hazard Multipliers (vs 21.39% Baseline)</h3>
-          <div style="overflow-x: auto;">
-            <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.875rem;">
+            <table class="high-risk-preview-table">
               <thead>
-                <tr style="border-bottom: 1px solid var(--border-medium); color: var(--text-secondary);">
-                  <th style="padding: 0.75rem 1rem;">Warning Signal</th>
-                  <th style="padding: 0.75rem 1rem;">Condition Threshold</th>
-                  <th style="padding: 0.75rem 1rem;">Flagged Accounts</th>
-                  <th style="padding: 0.75rem 1rem;">Churn Probability</th>
-                  <th style="padding: 0.75rem 1rem;">Hazard Multiplier</th>
+                <tr>
+                  <th>Customer Segment</th>
+                  <th>Total Base</th>
+                  <th>Churned</th>
+                  <th>Account Churn %</th>
+                  <th>Avg MRR</th>
+                  <th>Monthly Lost ARR</th>
+                  <th>Revenue Impact Share</th>
                 </tr>
               </thead>
               <tbody>
-                <tr style="border-bottom: 1px solid var(--border-subtle);">
-                  <td style="padding: 0.75rem 1rem; font-weight: 600; color: var(--rose-danger);">Severe Inactivity</td>
-                  <td style="padding: 0.75rem 1rem; color: var(--text-secondary);">&ge; 14 days since last login</td>
-                  <td style="padding: 0.75rem 1rem;">2,418</td>
-                  <td style="padding: 0.75rem 1rem; font-weight: 700;">84.1%</td>
-                  <td style="padding: 0.75rem 1rem; font-weight: 800; color: var(--rose-danger);">3.93x</td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--border-subtle);">
-                  <td style="padding: 0.75rem 1rem; font-weight: 600; color: var(--amber-warning);">Usage Dropoff Velocity</td>
-                  <td style="padding: 0.75rem 1rem; color: var(--text-secondary);">&gt; 40% decline in 30d sessions</td>
-                  <td style="padding: 0.75rem 1rem;">2,752</td>
-                  <td style="padding: 0.75rem 1rem; font-weight: 700;">72.6%</td>
-                  <td style="padding: 0.75rem 1rem; font-weight: 800; color: var(--amber-warning);">3.39x</td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--border-subtle);">
-                  <td style="padding: 0.75rem 1rem; font-weight: 600; color: var(--amber-warning);">Failed Payment</td>
-                  <td style="padding: 0.75rem 1rem; color: var(--text-secondary);">&ge; 1 billing failure</td>
-                  <td style="padding: 0.75rem 1rem;">1,180</td>
-                  <td style="padding: 0.75rem 1rem; font-weight: 700;">68.4%</td>
-                  <td style="padding: 0.75rem 1rem; font-weight: 800; color: var(--amber-warning);">3.20x</td>
+                <tr>
+                  <td><strong>Enterprise</strong></td>
+                  <td class="tnum">1,200</td>
+                  <td class="tnum">188</td>
+                  <td class="tnum" style="font-weight: 700;">15.67%</td>
+                  <td class="tnum">$392.40</td>
+                  <td class="tnum" style="font-weight: 700; color: var(--risk-critical);">$73,771 / mo</td>
+                  <td><span class="kpi-badge danger tnum">32.23% Share</span></td>
                 </tr>
                 <tr>
-                  <td style="padding: 0.75rem 1rem; font-weight: 600; color: var(--indigo-primary);">Plan Downgrade Event</td>
-                  <td style="padding: 0.75rem 1rem; color: var(--text-secondary);">Lower tier switch</td>
-                  <td style="padding: 0.75rem 1rem;">520</td>
-                  <td style="padding: 0.75rem 1rem; font-weight: 700;">62.8%</td>
-                  <td style="padding: 0.75rem 1rem; font-weight: 800; color: var(--indigo-primary);">2.94x</td>
+                  <td><strong>Mid-Market</strong></td>
+                  <td class="tnum">2,400</td>
+                  <td class="tnum">442</td>
+                  <td class="tnum" style="font-weight: 700;">18.42%</td>
+                  <td class="tnum">$147.00</td>
+                  <td class="tnum" style="font-weight: 700; color: var(--risk-high);">$64,974 / mo</td>
+                  <td><span class="kpi-badge warning tnum">28.39% Share</span></td>
+                </tr>
+                <tr>
+                  <td><strong>SMB</strong></td>
+                  <td class="tnum">4,400</td>
+                  <td class="tnum">1,021</td>
+                  <td class="tnum" style="font-weight: 700;">23.20%</td>
+                  <td class="tnum">$46.50</td>
+                  <td class="tnum" style="font-weight: 700;">$47,476 / mo</td>
+                  <td><span class="kpi-badge neutral tnum">20.75% Share</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Startup / Individual</strong></td>
+                  <td class="tnum">2,000</td>
+                  <td class="tnum">488</td>
+                  <td class="tnum" style="font-weight: 700;">24.40%</td>
+                  <td class="tnum">$36.50</td>
+                  <td class="tnum" style="font-weight: 700;">$17,812 / mo</td>
+                  <td><span class="kpi-badge neutral tnum">7.78% Share</span></td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- Automated Retention Playbooks Visualizer -->
-  <section id="playbooks" class="section-spacing">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-tag">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
-          <span>Automated Workflows</span>
-        </div>
-        <h2 class="section-title">Turn Risk Scores into Automatic Countermeasures</h2>
-        <p class="section-subtitle">
-          Don't wait for weekly syncs. ChurnLens triggers automated retention playbooks across your tools the moment an account crosses a risk threshold.
-        </p>
-      </div>
-
-      <div class="playbook-flow-grid">
-        <!-- Playbook 1 -->
-        <div class="playbook-card">
-          <div class="playbook-trigger-badge">TRIGGER: INVOLUNTARY DECLINE</div>
-          <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Smart Dunning & Card Recovery</h3>
-          <p style="font-size: 0.875rem; color: var(--text-secondary);">
-            Automates multi-touch card updates and retries before accounts churn involuntarily.
-          </p>
-          <ul class="playbook-flow-list">
-            <li class="playbook-flow-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Instant Stripe webhook retry scheduling</span>
-            </li>
-            <li class="playbook-flow-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Frictionless 1-click update payment portal</span>
-            </li>
-            <li class="playbook-flow-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Auto-applied 7-day grace period lock</span>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Playbook 2 -->
-        <div class="playbook-card">
-          <div class="playbook-trigger-badge" style="color: var(--rose-danger); background: var(--rose-subtle); border-color: rgba(244, 63, 94, 0.3);">
-            TRIGGER: SCORE &gt; 80 / HIGH-VALUE
-          </div>
-          <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">VIP Executive Escalation SLA</h3>
-          <p style="font-size: 0.875rem; color: var(--text-secondary);">
-            Directs high-value at-risk accounts ($150+/mo MRR) into immediate high-touch intervention.
-          </p>
-          <ul class="playbook-flow-list">
-            <li class="playbook-flow-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Instant Slack alert to #retention-war-room</span>
-            </li>
-            <li class="playbook-flow-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>High-priority Salesforce task created for AE</span>
-            </li>
-            <li class="playbook-flow-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>4-hour response SLA timer tracking</span>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Playbook 3 -->
-        <div class="playbook-card">
-          <div class="playbook-trigger-badge" style="color: var(--cyan-hover); background: var(--cyan-subtle); border-color: rgba(14, 165, 233, 0.3);">
-            TRIGGER: ADOPTION CLIFF (DAYS 1–14)
-          </div>
-          <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Guided In-App Activation Nudge</h3>
-          <p style="font-size: 0.875rem; color: var(--text-secondary);">
-            Safeguards new signups from falling off the 90-day onboarding cliff.
-          </p>
-          <ul class="playbook-flow-list">
-            <li class="playbook-flow-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Contextual in-app banner for core feature setup</span>
-            </li>
-            <li class="playbook-flow-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Personalized Day 3 & 7 email onboarding sequence</span>
-            </li>
-            <li class="playbook-flow-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Automated 1-click CSM calendar booking</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Playbook Simulation Interactive Trigger -->
-      <div style="margin-top: 2.5rem; text-align: center;">
-        <button id="btn-simulate-playbook" class="btn btn-secondary">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          <span>Simulate Live Playbook Dispatch</span>
-        </button>
-        <div id="simulation-toast" style="margin-top: 1.25rem; max-width: 600px; margin-left: auto; margin-right: auto;"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Social Proof & Customer Success Stories -->
-  <section class="section-spacing" style="background: rgba(13, 19, 34, 0.3);">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-tag">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-          <span>Verified Customer Impact</span>
-        </div>
-        <h2 class="section-title">Trusted by Modern SaaS Revenue Teams</h2>
-        <p class="section-subtitle">
-          See how leading SaaS organizations transformed customer retention with ChurnLens.
-        </p>
-      </div>
-
-      <div class="testimonials-grid">
-        <!-- Testimonial 1 -->
-        <div class="testimonial-card">
-          <div>
-            <div class="roi-metric-pill">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
-              <span>Saved $420K ARR in 90 Days</span>
+        <!-- ====================================================================
+             PAGE: ROOT CAUSES (#/root-causes)
+             ==================================================================== -->
+        <div id="root-causes-page" class="page-view">
+          <div class="root-cause-layout">
+            <!-- Left: Driver Selection List -->
+            <div class="analytics-card">
+              <div class="card-header-row">
+                <h3 class="card-title">Top Empirical Churn Drivers</h3>
+                <span style="font-size: 0.75rem; color: var(--text-muted);">Select driver to inspect</span>
+              </div>
+              <div id="rc-driver-list">
+                <div class="driver-bar-item selected" data-driver="onboarding">
+                  <div class="driver-bar-top">
+                    <span style="font-size: 0.875rem; font-weight: 700;">Low Feature Adoption &amp; Onboarding Dropoff</span>
+                    <span class="tnum" style="font-weight: 700;">41.2%</span>
+                  </div>
+                  <div class="driver-bar-track"><div class="driver-bar-fill" style="width: 41.2%; background: var(--risk-critical);"></div></div>
+                </div>
+                <div class="driver-bar-item" data-driver="billing">
+                  <div class="driver-bar-top">
+                    <span style="font-size: 0.875rem; font-weight: 700;">Involuntary Billing &amp; Payment Declines</span>
+                    <span class="tnum" style="font-weight: 700;">24.6%</span>
+                  </div>
+                  <div class="driver-bar-track"><div class="driver-bar-fill" style="width: 24.6%; background: var(--risk-high);"></div></div>
+                </div>
+                <div class="driver-bar-item" data-driver="support">
+                  <div class="driver-bar-top">
+                    <span style="font-size: 0.875rem; font-weight: 700;">Operational Support Friction &amp; Escalations</span>
+                    <span class="tnum" style="font-weight: 700;">18.1%</span>
+                  </div>
+                  <div class="driver-bar-track"><div class="driver-bar-fill" style="width: 18.1%; background: var(--risk-medium);"></div></div>
+                </div>
+                <div class="driver-bar-item" data-driver="downgrade">
+                  <div class="driver-bar-top">
+                    <span style="font-size: 0.875rem; font-weight: 700;">Precursor Plan Downgrades</span>
+                    <span class="tnum" style="font-weight: 700;">9.5%</span>
+                  </div>
+                  <div class="driver-bar-track"><div class="driver-bar-fill" style="width: 9.5%; background: var(--info-accent);"></div></div>
+                </div>
+                <div class="driver-bar-item" data-driver="attrition">
+                  <div class="driver-bar-top">
+                    <span style="font-size: 0.875rem; font-weight: 700;">Natural Attrition &amp; Market Shifts</span>
+                    <span class="tnum" style="font-weight: 700;">6.6%</span>
+                  </div>
+                  <div class="driver-bar-track"><div class="driver-bar-fill" style="width: 6.6%; background: var(--text-muted);"></div></div>
+                </div>
+              </div>
             </div>
-            <p class="quote-text">
-              "Before ChurnLens, we had no idea that 60% of our churn revenue was hidden inside Enterprise accounts undergoing support friction. The 0–100 scoring model gave our CSMs total clarity on whom to call first."
-            </p>
-          </div>
-          <div class="user-profile">
-            <div class="avatar-placeholder">DK</div>
-            <div class="user-info">
-              <h4>David Keller</h4>
-              <p>VP of Customer Success, CloudScale</p>
+
+            <!-- Right: Dynamic Diagnostic Inspector -->
+            <div class="analytics-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: inline-block; font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; color: var(--brand-accent); background: var(--brand-accent-subtle); border: 1px solid var(--brand-accent-border); padding: 0.15rem 0.5rem; border-radius: var(--radius-xs); margin-bottom: 0.5rem;" id="rc-inspector-tag">
+                  Driver 01 &bull; 41.2% Share
+                </div>
+                <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.4rem;" id="rc-inspector-title">Low Feature Adoption &amp; Onboarding Cliff</h3>
+                <p style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 1.25rem;" id="rc-inspector-desc">
+                  Accounts failing to activate core automations within 14 days exhibit an extreme hazard spike.
+                </p>
+
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; background: var(--bg-surface-subtle); padding: 0.85rem; border-radius: var(--radius-sm); margin-bottom: 1.25rem;">
+                  <div>
+                    <div style="font-size: 0.6875rem; text-transform: uppercase; color: var(--text-muted); font-weight: 600;">Affected Base</div>
+                    <div style="font-size: 1rem; font-weight: 800;" class="tnum" id="rc-inspector-affected">3,820 accounts</div>
+                  </div>
+                  <div>
+                    <div style="font-size: 0.6875rem; text-transform: uppercase; color: var(--text-muted); font-weight: 600;">Churn Hazard</div>
+                    <div style="font-size: 1rem; font-weight: 800; color: var(--risk-critical);" class="tnum" id="rc-inspector-hazard">38.4%</div>
+                  </div>
+                  <div>
+                    <div style="font-size: 0.6875rem; text-transform: uppercase; color: var(--text-muted); font-weight: 600;">Lost Revenue</div>
+                    <div style="font-size: 1rem; font-weight: 800;" class="tnum" id="rc-inspector-revenue">$1,131,414 / yr</div>
+                  </div>
+                </div>
+
+                <div style="padding: 0.85rem; border: 1px solid var(--border-light); border-radius: var(--radius-sm); margin-bottom: 1.25rem;">
+                  <div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.25rem;">Telemetry Pattern</div>
+                  <p style="font-size: 0.8125rem; color: var(--text-secondary); margin: 0; line-height: 1.4;" id="rc-inspector-behavior">
+                    User logs in 2–3 times in Week 1 without setting up integrations. Activity interval extends past 10 days by Week 3.
+                  </p>
+                </div>
+              </div>
+
+              <div style="padding: 0.85rem; background: var(--bg-surface-subtle); border-left: 3px solid var(--health-good); border-radius: 0 var(--radius-sm) var(--radius-sm) 0;">
+                <div style="font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; color: var(--health-good);">Prescribed Countermeasure</div>
+                <div style="font-size: 0.875rem; font-weight: 700; margin-top: 0.15rem;" id="rc-inspector-action-title">Day 3 &amp; 7 Guided Setup Walkthrough</div>
+                <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.15rem;" id="rc-inspector-action-desc">
+                  Trigger contextual checklist on next session. If inactive at Day 7, dispatch 1-click CSM onboarding assistance.
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- Testimonial 2 -->
-        <div class="testimonial-card">
-          <div>
-            <div class="roi-metric-pill">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
-              <span>48% Drop in Involuntary Churn</span>
+        <!-- ====================================================================
+             PAGE: RISK INTELLIGENCE (#/risk)
+             ==================================================================== -->
+        <div id="risk-page" class="page-view">
+          <div class="risk-page-grid">
+            <!-- 0-100 Risk Simulator Sandbox -->
+            <div class="analytics-card">
+              <div class="card-header-row">
+                <h3 class="card-title">Customer Risk Simulator (0–100 Engine)</h3>
+                <span class="sim-subscore-pill" id="page-sim-score-pill">Score: 16 / 100</span>
+              </div>
+
+              <div class="sim-control-card">
+                <div style="display: flex; justify-content: space-between; font-size: 0.8125rem; font-weight: 600; margin-bottom: 0.35rem;">
+                  <span>Days Inactive: <span id="page-sim-inact-val" style="color: var(--brand-accent);" class="tnum">5 days</span></span>
+                  <span id="page-sub-inact" class="tnum" style="color: var(--text-muted);">+9.0 pts</span>
+                </div>
+                <input type="range" class="range-slider" id="page-sim-inact-slider" min="0" max="45" step="1" value="5">
+              </div>
+
+              <div class="sim-control-card">
+                <div style="display: flex; justify-content: space-between; font-size: 0.8125rem; font-weight: 600; margin-bottom: 0.35rem;">
+                  <span>30-Day Velocity Change: <span id="page-sim-vel-val" style="color: var(--brand-accent);" class="tnum">-20%</span></span>
+                  <span id="page-sub-vel" class="tnum" style="color: var(--text-muted);">+7.5 pts</span>
+                </div>
+                <input type="range" class="range-slider" id="page-sim-vel-slider" min="-80" max="30" step="5" value="-20">
+              </div>
+
+              <div class="sim-control-card">
+                <div style="font-size: 0.8125rem; font-weight: 600; margin-bottom: 0.35rem;">Failed Billing Events:</div>
+                <div class="toggle-group-sm">
+                  <button class="sim-btn-toggle active" data-page-billing="0">0 (Clean)</button>
+                  <button class="sim-btn-toggle" data-page-billing="1">1 Failed</button>
+                  <button class="sim-btn-toggle" data-page-billing="2">2+ Declined</button>
+                </div>
+              </div>
+
+              <div class="sim-control-card">
+                <div style="font-size: 0.8125rem; font-weight: 600; margin-bottom: 0.35rem;">Unresolved Support Tickets:</div>
+                <div class="toggle-group-sm">
+                  <button class="sim-btn-toggle active" data-page-support="0">0 Tickets</button>
+                  <button class="sim-btn-toggle" data-page-support="1">1 Ticket</button>
+                  <button class="sim-btn-toggle" data-page-support="2">2+ Escalated</button>
+                </div>
+              </div>
+
+              <div class="sim-control-card">
+                <div style="font-size: 0.8125rem; font-weight: 600; margin-bottom: 0.35rem;">Key Feature Activation:</div>
+                <div class="toggle-group-sm two-cols">
+                  <button class="sim-btn-toggle active" data-page-adoption="1">Activated</button>
+                  <button class="sim-btn-toggle" data-page-adoption="0">Unadopted</button>
+                </div>
+              </div>
             </div>
-            <p class="quote-text">
-              "The smart dunning triggers and payment decline playbooks paid for ChurnLens in our first two weeks. We recovered dozens of annual contracts that were slipping away silently."
-            </p>
+
+            <!-- Explainability & Prescribed Output -->
+            <div class="analytics-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div class="card-header-row">
+                  <h3 class="card-title">Score Explainability Decomposition</h3>
+                  <span id="page-sim-tier-badge" class="kpi-badge good">Low Risk</span>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.5rem; font-size: 0.8125rem;">
+                  <div style="display: flex; justify-content: space-between; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border-subtle);">
+                    <span>Inactivity Subscore</span>
+                    <span class="tnum" style="font-weight: 700;" id="page-decomp-inact">+9.0 pts</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border-subtle);">
+                    <span>Velocity Dropoff</span>
+                    <span class="tnum" style="font-weight: 700;" id="page-decomp-vel">+7.5 pts</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border-subtle);">
+                    <span>Payment Decline Penalty</span>
+                    <span class="tnum" style="font-weight: 700;" id="page-decomp-bill">+0.0 pts</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border-subtle);">
+                    <span>Support Ticket Friction</span>
+                    <span class="tnum" style="font-weight: 700;" id="page-decomp-supp">+0.0 pts</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border-subtle);">
+                    <span>Feature Adoption Penalty</span>
+                    <span class="tnum" style="font-weight: 700;" id="page-decomp-adopt">+0.0 pts</span>
+                  </div>
+                </div>
+              </div>
+
+              <div style="padding: 1rem; background: var(--bg-surface-subtle); border-radius: var(--radius-sm); border: 1px solid var(--border-light);">
+                <div style="font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted);">Recommended Action Protocol</div>
+                <div style="font-size: 0.875rem; font-weight: 700; margin-top: 0.2rem;" id="page-sim-strat-title">Automated Loyalty &amp; Expansion</div>
+                <p style="font-size: 0.8125rem; color: var(--text-secondary); margin-top: 0.2rem; line-height: 1.4;" id="page-sim-strat-desc">
+                  Healthy account. Deploy automated quarterly feature newsletters and champion referral incentives.
+                </p>
+              </div>
+            </div>
           </div>
-          <div class="user-profile">
-            <div class="avatar-placeholder" style="background: linear-gradient(135deg, #10B981, #0EA5E9);">SL</div>
-            <div class="user-info">
-              <h4>Sarah Lin</h4>
-              <p>Head of Revenue Operations, HyperFlow</p>
+
+          <!-- Customer Risk Matrix 2D Quadrant Plot -->
+          <div class="analytics-card">
+            <div class="card-header-row">
+              <div>
+                <h3 class="card-title">Customer Risk Matrix (2D Quadrant Scatter)</h3>
+                <p style="font-size: 0.75rem; color: var(--text-muted);">Engagement Velocity vs Customer MRR ($) &bull; Click points to inspect accounts</p>
+              </div>
+            </div>
+            <div class="matrix-canvas-box">
+              <canvas id="pageMatrixCanvas"></canvas>
             </div>
           </div>
         </div>
 
-        <!-- Testimonial 3 -->
-        <div class="testimonial-card">
-          <div>
-            <div class="roi-metric-pill">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
-              <span>Onboarding Cliff Reduced by 34%</span>
+        <!-- ====================================================================
+             PAGE: CUSTOMERS DIRECTORY (#/customers)
+             ==================================================================== -->
+        <div id="customers-page" class="page-view">
+          <div class="table-toolbar">
+            <div class="search-box">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" id="cust-table-search" placeholder="Search account name or ID..." aria-label="Search customers">
             </div>
-            <p class="quote-text">
-              "Pinpointing the exact feature desertion threshold in Month 1 transformed our product onboarding. Our trial-to-paid retention stabilized at an all-time high."
-            </p>
+
+            <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+              <select class="filter-select" id="cust-filter-segment" aria-label="Filter customer segment">
+                <option value="all">All Segments</option>
+                <option value="Enterprise">Enterprise</option>
+                <option value="Mid-Market">Mid-Market</option>
+                <option value="SMB">SMB</option>
+                <option value="Startup">Startup</option>
+              </select>
+
+              <select class="filter-select" id="cust-filter-risk" aria-label="Filter customer risk">
+                <option value="all">All Risk Levels</option>
+                <option value="Critical">Critical (>75)</option>
+                <option value="High">High (50–75)</option>
+                <option value="Medium">Medium (25–50)</option>
+                <option value="Low">Low (&le;25)</option>
+              </select>
+            </div>
           </div>
-          <div class="user-profile">
-            <div class="avatar-placeholder" style="background: linear-gradient(135deg, #F59E0B, #F43F5E);">MR</div>
-            <div class="user-info">
-              <h4>Marcus Ramos</h4>
-              <p>Chief Product Officer, OmniSync</p>
+
+          <div class="customer-table-wrap">
+            <table class="customer-table">
+              <thead>
+                <tr>
+                  <th>Customer Account</th>
+                  <th>Segment</th>
+                  <th>Tenure</th>
+                  <th>Last Active</th>
+                  <th>Usage Velocity</th>
+                  <th>Monthly Spend</th>
+                  <th>Risk Score</th>
+                  <th>Risk Level</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="customers-directory-tbody">
+                <!-- Injected via JavaScript -->
+              </tbody>
+            </table>
+          </div>
+
+          <div class="pagination-bar">
+            <span>Showing <strong id="pag-start">1</strong>–<strong id="pag-end">10</strong> of <strong id="pag-total">20</strong> accounts</span>
+            <div style="display: flex; gap: 0.5rem;">
+              <button class="btn btn-secondary btn-sm" id="btn-prev-page">Previous</button>
+              <button class="btn btn-secondary btn-sm" id="btn-next-page">Next</button>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- Transparent Pricing Matrix -->
-  <section id="pricing" class="section-spacing">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-tag">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
-          <span>Transparent Plans</span>
-        </div>
-        <h2 class="section-title">Predictable Pricing with Guaranteed ROI</h2>
-        <p class="section-subtitle">
-          Every plan includes our 0–100 Risk Engine, full telemetry integration, and a 30-day money-back retention guarantee.
-        </p>
-      </div>
+        <!-- ====================================================================
+             PAGE: CUSTOMER DETAIL DOSSIER (#/customers/:id)
+             ==================================================================== -->
+        <div id="customer-detail-page" class="page-view">
+          <div class="customer-detail-header">
+            <a href="#/customers" class="btn btn-secondary btn-sm">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+              <span>Back to Customers</span>
+            </a>
 
-      <!-- Billing Switch -->
-      <div class="pricing-toggle-wrap">
-        <span style="font-size: 0.9375rem; font-weight: 600;">Monthly Billing</span>
-        <div id="billing-toggle" class="billing-switch annual" role="switch" aria-checked="true" aria-label="Toggle Annual Billing Discount">
-          <div class="billing-slider"></div>
-        </div>
-        <span style="font-size: 0.9375rem; font-weight: 600;">Annual Billing</span>
-        <span class="save-pill">SAVE 20%</span>
-      </div>
-
-      <!-- Pricing Cards Grid -->
-      <div class="pricing-grid">
-        <!-- Plan 1: Startup -->
-        <div class="pricing-card">
-          <div class="plan-name">Startup</div>
-          <div class="plan-desc">For fast-growing SaaS startups looking to fix initial onboarding churn.</div>
-          <div class="plan-price-box">
-            <span id="price-startup" class="plan-price">$159</span>
-            <span class="plan-cycle">/month, billed annually</span>
-          </div>
-          <button class="btn btn-secondary" style="width: 100%;" data-open-modal="demo-modal">Start 14-Day Trial</button>
-          
-          <ul class="plan-features-list">
-            <li class="plan-feature-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Up to 2,500 active accounts</span>
-            </li>
-            <li class="plan-feature-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>0–100 Customer Risk Scoring</span>
-            </li>
-            <li class="plan-feature-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>90-Day Onboarding Cliff Analytics</span>
-            </li>
-            <li class="plan-feature-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Stripe & Segment Integration</span>
-            </li>
-            <li class="plan-feature-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Community & Email Support</span>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Plan 2: Growth (Featured) -->
-        <div class="pricing-card featured">
-          <div class="popular-badge">MOST POPULAR</div>
-          <div class="plan-name">Growth</div>
-          <div class="plan-desc">For scaling SaaS businesses requiring automated playbooks and CRM sync.</div>
-          <div class="plan-price-box">
-            <span id="price-growth" class="plan-price" style="color: var(--cyan-hover);">$399</span>
-            <span class="plan-cycle">/month, billed annually</span>
-          </div>
-          <button class="btn btn-primary" style="width: 100%;" data-open-modal="demo-modal">Get Started with Growth</button>
-
-          <ul class="plan-features-list">
-            <li class="plan-feature-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-              <span><strong>Up to 15,000 active accounts</strong></span>
-            </li>
-            <li class="plan-feature-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-              <span><strong>Automated Retention Playbooks</strong></span>
-            </li>
-            <li class="plan-feature-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Salesforce, HubSpot & Slack sync</span>
-            </li>
-            <li class="plan-feature-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Smart Dunning & Involuntary Recovery</span>
-            </li>
-            <li class="plan-feature-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Priority 4-Hour Support SLA</span>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Plan 3: Enterprise -->
-        <div class="pricing-card">
-          <div class="plan-name">Enterprise</div>
-          <div class="plan-desc">For large SaaS enterprises with dedicated data warehouses & custom ML models.</div>
-          <div class="plan-price-box">
-            <span id="price-enterprise" class="plan-price">$959</span>
-            <span class="plan-cycle">/month, billed annually</span>
-          </div>
-          <button class="btn btn-secondary" style="width: 100%;" data-open-modal="demo-modal">Contact Enterprise Team</button>
-
-          <ul class="plan-features-list">
-            <li class="plan-feature-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Unlimited accounts & custom limits</span>
-            </li>
-            <li class="plan-feature-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Custom ML Algorithm Hyperparameter Tuning</span>
-            </li>
-            <li class="plan-feature-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Snowflake & BigQuery native ETL sync</span>
-            </li>
-            <li class="plan-feature-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Custom SOC2 & HIPAA compliance</span>
-            </li>
-            <li class="plan-feature-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Dedicated Customer Success Architect</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Frequently Asked Questions -->
-  <section class="section-spacing" style="background: rgba(13, 19, 34, 0.3);">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-tag">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-          <span>Frequently Asked Questions</span>
-        </div>
-        <h2 class="section-title">Answers to Common Questions</h2>
-        <p class="section-subtitle">
-          Everything you need to know about integrating and operating ChurnLens.
-        </p>
-      </div>
-
-      <div class="faq-wrap">
-        <div class="faq-item active">
-          <button class="faq-question" aria-expanded="true">
-            <span>How is ChurnLens different from standard churn dashboards?</span>
-            <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-          <div class="faq-answer">
-            <p>
-              Standard dashboards simply record historical cancellations after they happen. ChurnLens computes a multi-vector 0–100 predictive risk score, isolates exact root cause mechanisms across the 90-day onboarding cliff, and automatically dispatches retention playbooks to Slack, Salesforce, and Stripe.
-            </p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            <span>How fast can we connect our data and start scoring?</span>
-            <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-          <div class="faq-answer">
-            <p>
-              With our 1-click connectors for Stripe, Segment, Salesforce, and Postgres/Snowflake, initial data ingestion takes under 15 minutes. The baseline Gradient Boosting model produces your first full risk matrix and revenue-at-risk report within 24 hours.
-            </p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            <span>Is our customer data secure and compliant?</span>
-            <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-          <div class="faq-answer">
-            <p>
-              Yes. ChurnLens is SOC2 Type II certified and GDPR compliant. All customer telemetry is encrypted in transit (TLS 1.3) and at rest (AES-256). Enterprise plans also support single-tenant isolated VPC deployment.
-            </p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            <span>What happens if our churn doesn't improve?</span>
-            <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-          <div class="faq-answer">
-            <p>
-              We provide a 30-day money-back guarantee. If ChurnLens doesn't identify actionable revenue at risk or improve your retention recovery workflows within 30 days, we'll refund 100% of your subscription fee with no questions asked.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Final High-Impact CTA Banner -->
-  <section class="section-spacing">
-    <div class="container">
-      <div class="final-cta-card">
-        <h2 style="font-size: clamp(2rem, 4vw, 3.25rem); font-weight: 800; margin-bottom: 1.25rem;">
-          Ready to Protect Your <span class="gradient-text">Recurring Revenue?</span>
-        </h2>
-        <p style="font-size: 1.125rem; color: var(--text-secondary); max-width: 650px; margin: 0 auto 2.5rem auto; line-height: 1.7;">
-          Join high-growth SaaS companies using ChurnLens to eliminate customer blindspots, rescue at-risk accounts, and maximize net revenue retention.
-        </p>
-        <div style="display: flex; justify-content: center; gap: 1.25rem; flex-wrap: wrap;">
-          <button class="btn btn-primary btn-lg" data-open-modal="demo-modal">
-            <span>Start Free 14-Day Trial</span>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-          </button>
-          <button class="btn btn-secondary btn-lg" data-open-modal="demo-modal">
-            <span>Schedule Executive Briefing</span>
-          </button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Global Footer -->
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div>
-          <a href="#hero" class="nav-brand" style="margin-bottom: 1rem;">
-            <div class="brand-icon-box">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5">
-                <circle cx="12" cy="12" r="10"></circle>
-                <circle cx="12" cy="12" r="4"></circle>
-              </svg>
+            <div style="display: flex; gap: 0.5rem;">
+              <button class="btn btn-primary btn-sm" id="btn-trigger-dossier-action">
+                <span>Dispatch Countermeasure</span>
+              </button>
             </div>
-            <span class="brand-text">Churn<span>Lens</span></span>
-          </a>
-          <p class="footer-brand-desc">
-            The complete customer churn analytics and retention intelligence platform for modern subscription SaaS businesses.
-          </p>
+          </div>
+
+          <!-- Dossier Grid -->
+          <div class="detail-dossier-grid">
+            <div class="analytics-card">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.25rem;">
+                <div>
+                  <h3 style="font-size: 1.35rem; font-weight: 800;" id="dossier-name">Apex Cloud Systems</h3>
+                  <p style="font-size: 0.8125rem; color: var(--text-muted); margin-top: 0.15rem;" id="dossier-meta">
+                    ID: CUST-1001 &bull; Enterprise Tier &bull; Month 2 Tenure
+                  </p>
+                </div>
+                <div style="text-align: right;">
+                  <span class="kpi-badge danger" id="dossier-risk-badge">Risk: 78/100 (High)</span>
+                  <div style="font-size: 1.25rem; font-weight: 800; margin-top: 0.25rem;" class="tnum" id="dossier-mrr">$420.00 / mo</div>
+                </div>
+              </div>
+
+              <!-- Risk Vector Breakdown -->
+              <h4 style="font-size: 0.875rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.75rem;">
+                Telemetry Risk Drivers
+              </h4>
+              <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin-bottom: 1.5rem;">
+                <div style="padding: 0.75rem; background: var(--bg-surface-subtle); border-radius: var(--radius-sm);">
+                  <div style="font-size: 0.6875rem; color: var(--text-muted);">Inactivity Window</div>
+                  <div style="font-size: 0.9375rem; font-weight: 700;" id="dossier-inact">14 Days Inactive</div>
+                </div>
+                <div style="padding: 0.75rem; background: var(--bg-surface-subtle); border-radius: var(--radius-sm);">
+                  <div style="font-size: 0.6875rem; color: var(--text-muted);">30-Day Activity Change</div>
+                  <div style="font-size: 0.9375rem; font-weight: 700; color: var(--risk-critical);" id="dossier-vel">-47% Velocity</div>
+                </div>
+                <div style="padding: 0.75rem; background: var(--bg-surface-subtle); border-radius: var(--radius-sm);">
+                  <div style="font-size: 0.6875rem; color: var(--text-muted);">Billing Status</div>
+                  <div style="font-size: 0.9375rem; font-weight: 700;" id="dossier-billing">1 Failed Payment</div>
+                </div>
+                <div style="padding: 0.75rem; background: var(--bg-surface-subtle); border-radius: var(--radius-sm);">
+                  <div style="font-size: 0.6875rem; color: var(--text-muted);">Support Escalations</div>
+                  <div style="font-size: 0.9375rem; font-weight: 700;" id="dossier-tickets">2 Open Tickets</div>
+                </div>
+              </div>
+
+              <!-- Prescribed Strategy -->
+              <div style="padding: 1rem; background: var(--bg-surface-subtle); border-left: 3px solid var(--risk-critical); border-radius: 0 var(--radius-sm) var(--radius-sm) 0;">
+                <div style="font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; color: var(--risk-critical);">Prescribed Intervention</div>
+                <div style="font-size: 0.875rem; font-weight: 700; margin-top: 0.2rem;" id="dossier-action-title">
+                  Immediate 4-Hour CSM Escalation &amp; Smart Dunning
+                </div>
+                <p style="font-size: 0.8125rem; color: var(--text-secondary); margin-top: 0.25rem; line-height: 1.4;" id="dossier-action-desc">
+                  Schedule direct executive outreach call with AE and deploy smart dunning retry with 7-day grace window lock.
+                </p>
+              </div>
+            </div>
+
+            <!-- Account Event Timeline -->
+            <div class="analytics-card">
+              <h3 class="card-title">Telemetry Activity Timeline</h3>
+              <div class="timeline-feed">
+                <div class="timeline-item">
+                  <div class="timeline-dot" style="background: var(--risk-critical);"></div>
+                  <div class="timeline-content">
+                    <div style="font-size: 0.75rem; font-weight: 700; color: var(--risk-critical);">Payment Failed</div>
+                    <div style="font-size: 0.75rem; color: var(--text-muted);">2 days ago &bull; Stripe Gateway Decline</div>
+                  </div>
+                </div>
+                <div class="timeline-item">
+                  <div class="timeline-dot" style="background: var(--risk-medium);"></div>
+                  <div class="timeline-content">
+                    <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-primary);">Support Escalation #4092</div>
+                    <div style="font-size: 0.75rem; color: var(--text-muted);">5 days ago &bull; Integration sync error reported</div>
+                  </div>
+                </div>
+                <div class="timeline-item">
+                  <div class="timeline-dot"></div>
+                  <div class="timeline-content">
+                    <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-primary);">Usage Velocity Drop (-47%)</div>
+                    <div style="font-size: 0.75rem; color: var(--text-muted);">14 days ago &bull; Weekly sessions dropped from 18 to 4</div>
+                  </div>
+                </div>
+                <div class="timeline-item">
+                  <div class="timeline-dot" style="background: var(--health-good);"></div>
+                  <div class="timeline-content">
+                    <div style="font-size: 0.75rem; font-weight: 700; color: var(--health-good);">Account Provisioned</div>
+                    <div style="font-size: 0.75rem; color: var(--text-muted);">60 days ago &bull; Enterprise Plan Initial Contract</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div>
-          <div class="footer-heading">Product</div>
-          <ul class="footer-nav">
-            <li><a href="#calculator" class="footer-link">ROI Calculator</a></li>
-            <li><a href="#risk-engine" class="footer-link">0–100 Risk Engine</a></li>
-            <li><a href="#root-causes" class="footer-link">Root Cause Intelligence</a></li>
-            <li><a href="#playbooks" class="footer-link">Automated Playbooks</a></li>
-            <li><a href="#pricing" class="footer-link">Pricing & Plans</a></li>
-          </ul>
+        <!-- ====================================================================
+             PAGE: PLAYBOOKS (#/playbooks)
+             ==================================================================== -->
+        <div id="playbooks-page" class="page-view">
+          <div class="playbooks-grid">
+            <div class="playbook-card">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                <span class="kpi-badge danger">Involuntary Recovery</span>
+                <span style="font-size: 0.6875rem; color: var(--text-muted); font-weight: 600;">RULE # DUN-01</span>
+              </div>
+              <div style="font-family: var(--font-mono); font-size: 0.8125rem; background: var(--bg-surface-subtle); padding: 0.5rem 0.75rem; border-radius: var(--radius-xs); margin-bottom: 0.75rem;">
+                <span class="condition-pill">IF</span> Failed Payment &ge; 1 &amp; Inactivity &ge; 3d
+              </div>
+              <div style="font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.4;">
+                <strong style="color: var(--text-primary);">THEN:</strong> Dispatch 4-step smart dunning sequence and apply 7-day grace window to prevent account lockout.
+              </div>
+            </div>
+
+            <div class="playbook-card">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                <span class="kpi-badge danger">VIP High-Value</span>
+                <span style="font-size: 0.6875rem; color: var(--text-muted); font-weight: 600;">RULE # VIP-02</span>
+              </div>
+              <div style="font-family: var(--font-mono); font-size: 0.8125rem; background: var(--bg-surface-subtle); padding: 0.5rem 0.75rem; border-radius: var(--radius-xs); margin-bottom: 0.75rem;">
+                <span class="condition-pill">IF</span> MRR &ge; $150 &amp; Risk Score &gt; 80
+              </div>
+              <div style="font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.4;">
+                <strong style="color: var(--text-primary);">THEN:</strong> Send Slack alert to <code>#retention-war-room</code> and assign 4-hour priority callback task to Senior CSM.
+              </div>
+            </div>
+
+            <div class="playbook-card">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                <span class="kpi-badge warning">Onboarding Cliff</span>
+                <span style="font-size: 0.6875rem; color: var(--text-muted); font-weight: 600;">RULE # ONB-03</span>
+              </div>
+              <div style="font-family: var(--font-mono); font-size: 0.8125rem; background: var(--bg-surface-subtle); padding: 0.5rem 0.75rem; border-radius: var(--radius-xs); margin-bottom: 0.75rem;">
+                <span class="condition-pill">IF</span> Tenure &le; 14d &amp; Key Feature Unadopted
+              </div>
+              <div style="font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.4;">
+                <strong style="color: var(--text-primary);">THEN:</strong> Trigger contextual setup banner and deploy personalized onboarding video sequences at Day 3 and Day 7.
+              </div>
+            </div>
+
+            <div class="playbook-card">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                <span class="kpi-badge neutral">Downgrade Intercept</span>
+                <span style="font-size: 0.6875rem; color: var(--text-muted); font-weight: 600;">RULE # DWN-04</span>
+              </div>
+              <div style="font-family: var(--font-mono); font-size: 0.8125rem; background: var(--bg-surface-subtle); padding: 0.5rem 0.75rem; border-radius: var(--radius-xs); margin-bottom: 0.75rem;">
+                <span class="condition-pill">IF</span> Plan Downgrade Executed
+              </div>
+              <div style="font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.4;">
+                <strong style="color: var(--text-primary);">THEN:</strong> Assign Account Executive check-in within 24 hours to offer tailored usage-based tier discount.
+              </div>
+            </div>
+          </div>
+
+          <!-- Playbook Simulation Button & Feedback -->
+          <div style="text-align: center; margin-top: 1.5rem;">
+            <button class="btn btn-secondary" id="btn-page-run-sim">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              <span>Simulate Live Playbook Dispatch</span>
+            </button>
+            <div id="playbook-toast-container" style="max-width: 600px; margin: 1rem auto 0 auto;"></div>
+          </div>
         </div>
 
-        <div>
-          <div class="footer-heading">Integrations</div>
-          <ul class="footer-nav">
-            <li><a href="#" class="footer-link">Stripe Billing</a></li>
-            <li><a href="#" class="footer-link">Salesforce CRM</a></li>
-            <li><a href="#" class="footer-link">HubSpot</a></li>
-            <li><a href="#" class="footer-link">Segment CDP</a></li>
-            <li><a href="#" class="footer-link">Snowflake Warehouse</a></li>
-          </ul>
+        <!-- ====================================================================
+             PAGE: METHODOLOGY (#/methodology)
+             ==================================================================== -->
+        <div id="methodology-page" class="page-view">
+          <div class="pipeline-step-grid">
+            <div class="pipeline-card">
+              <div style="font-size: 0.6875rem; font-family: var(--font-mono); font-weight: 700; color: var(--brand-accent);">STAGE 01</div>
+              <h4 style="font-size: 0.875rem; font-weight: 700; margin: 0.25rem 0;">Data Ingestion</h4>
+              <p style="font-size: 0.75rem; color: var(--text-muted);">10,000 accounts with 24-month relational event telemetry.</p>
+            </div>
+            <div class="pipeline-card">
+              <div style="font-size: 0.6875rem; font-family: var(--font-mono); font-weight: 700; color: var(--brand-accent);">STAGE 02</div>
+              <h4 style="font-size: 0.875rem; font-weight: 700; margin: 0.25rem 0;">Feature Engineering</h4>
+              <p style="font-size: 0.75rem; color: var(--text-muted);">19 signals (velocity drop, friction, tenure, spend).</p>
+            </div>
+            <div class="pipeline-card">
+              <div style="font-size: 0.6875rem; font-family: var(--font-mono); font-weight: 700; color: var(--brand-accent);">STAGE 03</div>
+              <h4 style="font-size: 0.875rem; font-weight: 700; margin: 0.25rem 0;">ML Benchmark</h4>
+              <p style="font-size: 0.75rem; color: var(--text-muted);">Gradient Boosting vs Random Forest vs Logistic Regression.</p>
+            </div>
+            <div class="pipeline-card">
+              <div style="font-size: 0.6875rem; font-family: var(--font-mono); font-weight: 700; color: var(--brand-accent);">STAGE 04</div>
+              <h4 style="font-size: 0.875rem; font-weight: 700; margin: 0.25rem 0;">0–100 Calibration</h4>
+              <p style="font-size: 0.75rem; color: var(--text-muted);">Explainable 4-vector composite scoring formula.</p>
+            </div>
+            <div class="pipeline-card">
+              <div style="font-size: 0.6875rem; font-family: var(--font-mono); font-weight: 700; color: var(--brand-accent);">STAGE 05</div>
+              <h4 style="font-size: 0.875rem; font-weight: 700; margin: 0.25rem 0;">Action Dispatch</h4>
+              <p style="font-size: 0.75rem; color: var(--text-muted);">Automated Slack, CRM tasks, and smart dunning.</p>
+            </div>
+          </div>
+
+          <!-- Benchmark Table -->
+          <div class="analytics-card" style="margin-bottom: 1.5rem;">
+            <div class="card-header-row">
+              <h3 class="card-title">Production Model Benchmark Results (Clean Test Cohort)</h3>
+            </div>
+            <table class="high-risk-preview-table">
+              <thead>
+                <tr>
+                  <th>Model</th>
+                  <th>ROC-AUC</th>
+                  <th>PR-AUC</th>
+                  <th>Precision</th>
+                  <th>Recall</th>
+                  <th>F1 Score</th>
+                  <th>Brier Score</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="background: var(--bg-surface-subtle);">
+                  <td><strong>Gradient Boosting Classifier</strong></td>
+                  <td class="tnum" style="font-weight: 700;">1.0000</td>
+                  <td class="tnum" style="font-weight: 700;">1.0000</td>
+                  <td class="tnum">0.9953</td>
+                  <td class="tnum">0.9953</td>
+                  <td class="tnum" style="font-weight: 700; color: var(--health-good);">0.9953</td>
+                  <td class="tnum">0.0017</td>
+                  <td><span class="kpi-badge good">Primary Production</span></td>
+                </tr>
+                <tr>
+                  <td>Random Forest Classifier</td>
+                  <td class="tnum">1.0000</td>
+                  <td class="tnum">1.0000</td>
+                  <td class="tnum">0.9977</td>
+                  <td class="tnum">0.9977</td>
+                  <td class="tnum">0.9977</td>
+                  <td class="tnum">0.0019</td>
+                  <td><span class="kpi-badge neutral">Benchmark</span></td>
+                </tr>
+                <tr>
+                  <td>Logistic Regression (Balanced)</td>
+                  <td class="tnum">1.0000</td>
+                  <td class="tnum">1.0000</td>
+                  <td class="tnum">0.9930</td>
+                  <td class="tnum">0.9977</td>
+                  <td class="tnum">0.9953</td>
+                  <td class="tnum">0.0013</td>
+                  <td><span class="kpi-badge neutral">Linear Baseline</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Business Threshold Optimization -->
+          <div class="analytics-card">
+            <h3 class="card-title" style="margin-bottom: 0.5rem;">Business Cost-Benefit Threshold Optimization</h3>
+            <p style="font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1rem;">
+              Decision cutoffs are tuned by balancing customer ACV ($1,440/yr) against intervention outreach cost ($40) and false-negative unaddressed churn. The optimal business threshold of <strong>0.68</strong> maximizes net economic value ($194,744 on test cohort) while maintaining 99.5% recall.
+            </p>
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <span style="font-family: var(--font-mono); font-size: 0.75rem; padding: 0.25rem 0.5rem; background: var(--bg-surface-subtle); border-radius: var(--radius-xs); border: 1px solid var(--border-light);">Python 3.12</span>
+              <span style="font-family: var(--font-mono); font-size: 0.75rem; padding: 0.25rem 0.5rem; background: var(--bg-surface-subtle); border-radius: var(--radius-xs); border: 1px solid var(--border-light);">Scikit-learn</span>
+              <span style="font-family: var(--font-mono); font-size: 0.75rem; padding: 0.25rem 0.5rem; background: var(--bg-surface-subtle); border-radius: var(--radius-xs); border: 1px solid var(--border-light);">Pandas</span>
+              <span style="font-family: var(--font-mono); font-size: 0.75rem; padding: 0.25rem 0.5rem; background: var(--bg-surface-subtle); border-radius: var(--radius-xs); border: 1px solid var(--border-light);">SQLite</span>
+              <span style="font-family: var(--font-mono); font-size: 0.75rem; padding: 0.25rem 0.5rem; background: var(--bg-surface-subtle); border-radius: var(--radius-xs); border: 1px solid var(--border-light);">Chart.js</span>
+            </div>
+          </div>
         </div>
 
-        <div>
-          <div class="footer-heading">Company</div>
-          <ul class="footer-nav">
-            <li><a href="#" class="footer-link">About Us</a></li>
-            <li><a href="#" class="footer-link">Security & SOC2</a></li>
-            <li><a href="#" class="footer-link">Privacy Policy</a></li>
-            <li><a href="#" class="footer-link">Terms of Service</a></li>
-            <li><a href="#" class="footer-link">Contact Support</a></li>
-          </ul>
-        </div>
       </div>
-
-      <div class="footer-bottom">
-        <div>&copy; 2026 ChurnLens Inc. All rights reserved.</div>
-        <div style="display: flex; gap: 1.5rem;">
-          <span>SOC2 Certified</span>
-          <span>GDPR Compliant</span>
-          <span>99.99% SLA</span>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Demo Booking & Instant Sandbox Modal -->
-  <div id="demo-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-    <div class="modal-dialog">
-      <button id="modal-close-btn" class="modal-close-btn" aria-label="Close modal">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
-
-      <!-- Form View -->
-      <form id="demo-form">
-        <h3 id="modal-title" style="font-size: 1.5rem; margin-bottom: 0.5rem;">Get Your Instant Retention Audit</h3>
-        <p style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 1.75rem;">
-          Connect with our retention engineering team to evaluate your customer risk distribution and benchmark your revenue at risk.
-        </p>
-
-        <div class="form-group">
-          <label for="demo-email" class="form-label">Work Email</label>
-          <input type="email" id="demo-email" class="form-input" placeholder="alex@yourcompany.com" required>
-        </div>
-
-        <div class="form-group">
-          <label for="demo-company" class="form-label">Company Name</label>
-          <input type="text" id="demo-company" class="form-input" placeholder="Acme SaaS Inc." required>
-        </div>
-
-        <div class="form-group">
-          <label for="demo-mrr" class="form-label">Current Monthly Recurring Revenue (MRR)</label>
-          <select id="demo-mrr" class="form-select">
-            <option value="50k">$10,000 – $50,000 / mo</option>
-            <option value="150k" selected>$50,000 – $250,000 / mo</option>
-            <option value="500k">$250,000 – $1,000,000 / mo</option>
-            <option value="1m+">$1,000,000+ / mo</option>
-          </select>
-        </div>
-
-        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
-          <span>Generate Free Audit & Schedule Demo</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-        </button>
-      </form>
-
-      <!-- Success State -->
-      <div id="demo-success-state" style="display: none; text-align: center; padding: 1.5rem 0;">
-        <div style="width: 60px; height: 60px; border-radius: 50%; background: var(--emerald-subtle); color: var(--emerald-success); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem auto; border: 1px solid rgba(16, 185, 129, 0.4);">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-        </div>
-        <h3 style="font-size: 1.35rem; margin-bottom: 0.5rem;">Audit Report Dispatched!</h3>
-        <p style="font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">
-          We've simulated your churn risk profile and sent the initial breakdown to <strong id="target-demo-email" style="color: var(--cyan-hover);">your email</strong>. An onboarding specialist will reach out within 2 hours.
-        </p>
-        <button class="btn btn-secondary" onclick="document.getElementById('demo-modal').classList.remove('active'); document.body.style.overflow='';" style="width: 100%;">
-          Close Window
-        </button>
-      </div>
-    </div>
+    </main>
   </div>
 
-  <!-- JavaScript -->
+  <!-- JavaScript Module -->
   <script src="js/app.js"></script>
 </body>
 </html>
